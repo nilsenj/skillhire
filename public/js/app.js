@@ -4879,6 +4879,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4893,7 +4896,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             userSkillSet: [],
             userSkillSetCount: '',
             isLoading: false,
-            error: {}
+            error: null
         };
     },
 
@@ -4902,13 +4905,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.$http.get('api/skills/userSkills').then(function (response) {
-
                 // get body data
                 _this.userSkillSet = response.body.items;
                 _this.userSkillSetCount = response.body.count;
-                console.log(response.body);
             }, function (response) {
                 // error callback
+                _this.error = response.data;
             });
         },
         all: function all(query) {
@@ -4923,14 +4925,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.isLoading = false;
             }, function (response) {
                 // error callback
+                _this2.error = response.data;
             });
         },
         attachUserSkill: function attachUserSkill(skill) {
             var _this3 = this;
 
+            console.log(skill);
             this.$http.put('api/skills/userSkills', { tags_list: skill }).then(function (response) {
-                console.log(response.body);
                 _this3.userSkills();
+                _this3.all();
+                _this3.selectedSkill = '';
             }, function (response) {
                 // error callback
             });
@@ -4953,6 +4958,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this4.userSkills();
             }, function (response) {
                 // error callback
+                _this4.error = response.data;
             });
         },
         deleteTag: function deleteTag(tag, event) {
@@ -4963,11 +4969,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this5.userSkills();
             }, function (response) {
                 // error callback
+                _this5.error = response.data;
             });
         }
     },
     mounted: function mounted() {
         this.userSkills();
+    },
+    watch: {
+        selectedSkill: function selectedSkill(val) {
+            this.addTag(val);
+            // get body data
+            this.skills = [];
+            this.skillsCount = 0;
+            this.isLoading = false;
+        }
     },
     components: {
         StarRating: __WEBPACK_IMPORTED_MODULE_0_vue_star_rating___default.a,
@@ -37206,7 +37222,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-sm-8"
   }, [_c('p', {
     staticClass: "lead"
-  }, [_vm._v("Show Your skill and its level .")]), _vm._v(" "), _c('form', {
+  }, [_vm._v("Show Your skill and its level .")]), _vm._v(" "), (_vm.error) ? _c('div', {
+    staticClass: "alert alert-danger"
+  }, [_c('p', [_vm._v("There was an error, " + _vm._s(_vm.error))])]) : _vm._e(), _vm._v(" "), _c('form', {
     staticClass: "skills-form",
     attrs: {
       "id": "add-skill"
@@ -37220,15 +37238,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "ajax",
       "taggable": true,
       "label": "name",
-      "track-by": "code",
+      "track-by": "name",
       "placeholder": "Type to search",
       "options": _vm.skills,
       "multiple": false,
       "searchable": true,
       "loading": _vm.isLoading,
-      "internal-search": false,
-      "clear-on-select": false,
-      "close-on-select": false,
+      "internal-search": true,
+      "clear-on-select": true,
+      "close-on-select": true,
       "options-limit": 300,
       "limit": 50,
       "limit-text": _vm.limitText

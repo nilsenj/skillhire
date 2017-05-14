@@ -1,15 +1,18 @@
 <template>
     <div class="col-sm-8">
         <p class="lead">Show Your skill and its level&nbsp;.</p>
-
+        <div class="alert alert-danger" v-if="error">
+            <p>There was an error, {{error}}</p>
+        </div>
         <form id="add-skill" class="skills-form">
             <div class="form-group">
                 <label class="typo__label">Your Skills</label>
                 <multiselect v-model="selectedSkill" id="ajax" @tag="addTag" :taggable="true" label="name"
-                             track-by="code" placeholder="Type to search" :options="skills" :multiple="false"
-                             :searchable="true" :loading="isLoading" :internal-search="false" :clear-on-select="false"
-                             :close-on-select="false" :options-limit="300" :limit="50" :limit-text="limitText"
-                             @search-change="all"><span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
+                             track-by="name" placeholder="Type to search" :options="skills" :multiple="false"
+                             :searchable="true" :loading="isLoading" :internal-search="true" :clear-on-select="true"
+                             :close-on-select="true" :options-limit="300" :limit="50" :limit-text="limitText"
+                             @search-change="all">
+                    <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
                 </multiselect>
             </div>
             <div class="skills-table-wrapper">
@@ -46,19 +49,18 @@
                 userSkillSet: [],
                 userSkillSetCount: '',
                 isLoading: false,
-                error: {}
+                error: null
             }
         },
         methods: {
             userSkills() {
                 this.$http.get('api/skills/userSkills').then(response => {
-
                     // get body data
                     this.userSkillSet = response.body.items;
                     this.userSkillSetCount = response.body.count;
-                    console.log(response.body)
                 }, response => {
                     // error callback
+                    this.error = response.data;
                 });
             },
 
@@ -73,12 +75,15 @@
 
                 }, response => {
                     // error callback
+                    this.error = response.data;
                 });
             },
             attachUserSkill(skill) {
+                console.log(skill);
                 this.$http.put('api/skills/userSkills', {tags_list: skill}).then(response => {
-                    console.log(response.body);
                     this.userSkills();
+                    this.all();
+                    this.selectedSkill = '';
                 }, response => {
                     // error callback
                 });
@@ -99,6 +104,7 @@
                     this.userSkills();
                 }, response => {
                     // error callback
+                    this.error = response.data;
                 });
             },
             deleteTag (tag, event) {
@@ -107,11 +113,21 @@
                     this.userSkills();
                 }, response => {
                     // error callback
+                    this.error = response.data;
                 });
             }
         },
         mounted: function () {
             this.userSkills();
+        },
+        watch: {
+            selectedSkill: function (val) {
+                this.addTag(val);
+                // get body data
+                this.skills = [];
+                this.skillsCount = 0;
+                this.isLoading = false
+            }
         },
         components: {
             StarRating,

@@ -65,11 +65,14 @@ class SkillsController extends Controller
         $taglist = $request->input('tags_list');
 
         if(is_array($taglist)) {
-            $taglist = implode(',', $taglist);
+            if(!empty($taglist['name'])) {
+                $taglist = $taglist['name'];
+            } else {
+                $taglist = implode(',', $taglist);
+            }
         }
 
         if (!empty($taglist)) {
-
             $request->user()->tag($taglist);
         }
     }
