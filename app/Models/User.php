@@ -27,7 +27,7 @@ class User extends Authenticatable
     /**
      * @var array
      */
-    protected $with = ['roles'];
+    protected $with = ['roles', 'profile'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,8 +38,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function vacancies() {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function vacancies()
+    {
         return $this->belongsTo(Vacancy::class, 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id');
     }
     /**
      * Hash the users password

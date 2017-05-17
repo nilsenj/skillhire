@@ -35150,7 +35150,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/node_modules/vue-star-rating/src/star-rating.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\node_modules\\vue-star-rating\\src\\star-rating.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] star-rating.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35184,7 +35184,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/node_modules/vue-star-rating/src/star.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\node_modules\\vue-star-rating\\src\\star.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] star.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35218,7 +35218,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/App.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35252,7 +35252,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Auth/Register.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Auth\\Register.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Register.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35286,7 +35286,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Auth/Signin.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Auth\\Signin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Signin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35320,7 +35320,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Employees/Employees.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Employees\\Employees.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Employees.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35354,7 +35354,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Employers/Employers.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Employers\\Employers.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Employers.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35388,7 +35388,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Home.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35422,7 +35422,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Partials/Navigation.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Partials\\Navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35456,7 +35456,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/User/Account.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\User\\Account.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Account.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35490,7 +35490,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/User/Profile.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\User\\Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35524,7 +35524,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/User/Skills.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\User\\Skills.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Skills.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35558,7 +35558,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Vacancy/Vacancies.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Vacancy\\Vacancies.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Vacancies.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -35592,7 +35592,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/Code/skillhire/resources/assets/js/components/Vacancy/Vacancy.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\skillhire\\resources\\assets\\js\\components\\Vacancy\\Vacancy.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Vacancy.vue: functional components are not supported with templates, they should use render functions.")}
 
