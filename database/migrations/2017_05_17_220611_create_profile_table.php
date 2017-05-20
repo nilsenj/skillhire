@@ -27,7 +27,7 @@ class CreateProfileTable extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('experience_time')->default('');
+            $table->decimal('experience_time', 2,1)->default(0);
             $table->string('main_trend')->default('');
             $table->string('second_trend')->default('');
             $table->string('english_skill')->default('');

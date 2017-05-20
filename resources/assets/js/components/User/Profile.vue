@@ -1,42 +1,37 @@
 <template>
-    <form method="post" class="js-profile-form form-horizontal form-horizontal-text-left">
+    <form method="post" v-on:submit="updateProfile" class="js-profile-form form-horizontal form-horizontal-text-left">
         <div class="row">
             <div class="col-sm-10">
-
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="position">Должность</label>
+                    <label class="col-sm-3 control-label" for="position">Position</label>
                     <div class="col-sm-7">
                         <input type="text" name="position" autocomplete="off" data-provide="typeahead" id="position"
-                               class="form-control" value="Senior PHP Developer">
+                               class="form-control"  v-model="profile.position" placeholder="Senior PHP Developer">
                     </div>
                 </div>
-
-
                 <div class="form-group">
-
-                    <label class="col-sm-3 control-label" for="salary_min">Зарплата не ниже</label>
+                    <label class="col-sm-3 control-label" for="salary">Salary not lower than</label>
                     <div class="col-sm-7">
                         <div class="input-group">
                             <div class="input-group-addon">$</div>
-                            <input type="number" name="salary_min" id="salary_min" step="100" min="100"
-                                   required="required" autocomplete="off" class="form-control input salary"
-                                   value="3500">
-
+                            <input type="number" name="salary" id="salary" step="100" min="100"
+                                   required="required" v-model="profile.salary" autocomplete="off" class="form-control input salary"
+                                   placeholder="500">
                         </div>
                         <p class="help-block">Если не уверены сколько написать, посмотрите
                             <a target="_blank"
                                href="https://djinni.co/salaries/?city=Львов&amp;job=PHP&amp;year=6m">наш виджет зарплат</a>
                             и
-                            <a target="_blank" href="/search/?sortby=rating&amp;keywords=PHP">как оценивают себя другие</a>.
+                            <a target="_blank"
+                               href="/search/?sortby=rating&amp;keywords=PHP">как оценивают себя другие</a>.
                         </p>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="location">Город</label>
+                    <label class="col-sm-3 control-label" for="location">City/Location</label>
                     <div class="col-sm-7">
                         <input type="text" name="location" id="location" autocomplete="off" data-provide="typeahead"
-                               required="required" class="form-control" value="Kiev, Lviv, Odessa, Kharkiv">
+                               required="required" v-model="profile.location" class="form-control input location" placeholder="Kiev, Lviv, Odessa, Kharkiv">
                         <p class="help-block">Город, где вы ищете работу.
                             Например: Киев, Львов.</p>
                     </div>
@@ -44,197 +39,61 @@
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="moreinfo">
-                        Опыт, навыки
-
+                        Experience
                     </label>
-
                     <div class="col-sm-7">
-              <textarea rows="9" class="form-control" maxlength="750" name="moreinfo" id="moreinfo">Php, Laravel, Angular2, Vue.js, Node.js, Express.js,
+              <textarea rows="9" class="form-control" maxlength="750" name="moreinfo" id="moreinfo" placeholder="Php, Laravel, Angular2, Vue.js, Node.js, Express.js,
 MySQL, Redis, MongoDB,
-JavaScript, Linux, CSS, HTML, Backbone, React.</textarea>
-
+JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></textarea>
                         <p class="help-block">Напишите главное, не пишите все
                             знакомые аббревиатуры.</p>
-
                         <p class="charsLeft-warn moreinfo-charsLeft-warn text-warning" style="display:none;">
                             <span class="charsLeftHelp">Осталось символов:</span>
                             <span class="charsLeft moreinfo-charsLeft label label-danger">750</span>
                         </p>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
-
         <div class="row">
             <div class="col-sm-10">
-
                 <div class="form-group">
-                    <h4 class="col-sm-offset-3 col-sm-7" style="margin-bottom: 0;">Дополнительная информация </h4>
+                    <h4 class="col-sm-offset-3 col-sm-7" style="margin-bottom: 0;">Additional Info </h4>
                 </div>
-
                 <div id="extraquestions">
-
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Опыт работы</label>
-
-                        <div class="col-sm-7">
-
-                            <div class="experience-slider noUi-target noUi-ltr noUi-horizontal noUi-background">
-                                <div class="noUi-base">
-                                    <div class="noUi-origin noUi-stacking" style="left: 64.2857%;">
-                                        <div class="noUi-handle noUi-handle-lower"></div>
-                                    </div>
-                                </div>
-                                <div class="noUi-pips noUi-pips-horizontal">
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-large"
-                                         style="left: 0.00000%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-large"
-                                         style="left: 0.00000%">0
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 7.14286%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 7.14286%">1
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 14.28571%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 14.28571%">2
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 21.42857%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 21.42857%">3
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 28.57143%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 28.57143%">4
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 35.71429%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 35.71429%">5
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 42.85714%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 42.85714%">6
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 50.00000%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 50.00000%">7
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 57.14286%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 57.14286%">8
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 64.28571%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 64.28571%">9
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 71.42857%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 71.42857%">10
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 78.57143%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 78.57143%">11
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 85.71429%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 85.71429%">12
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-sub"
-                                         style="left: 92.85714%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-sub"
-                                         style="left: 92.85714%">13
-                                    </div>
-                                    <div class="noUi-marker noUi-marker-horizontal noUi-marker-large"
-                                         style="left: 100.00000%"></div>
-                                    <div class="noUi-value noUi-value-horizontal noUi-value-large"
-                                         style="left: 100.00000%">14
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="help-block experience-slider-value" style="color: inherit;">6 лет</p>
-                            <input class="experience-slider-input" name="experience_years" type="hidden"
-                                   value="9.00">
+                        <label class="col-sm-3 control-label">Experience</label>
+                        <div class="col-sm-7" style="z-index: 0;">
+                            <vue-slider ref="slider" :height="8"
+                                        :dotSize="20" :tooltip="true" :disabled="false" :piecewise="true"
+                            :piecewiseLabel="true" :real-time="true" :min="0" :max="15" :interval="1" v-model="profile.experience_time"></vue-slider>
+                            <p class="help-block experience-slider-value" style="color: inherit;">{{profile.experience_time}} years</p>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Категория</label>
-
+                        <label class="col-sm-3 control-label">Main trend</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="id_primary_keyword_cache" name="primary_keyword_cache">
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="Java">Java</option>
-                                <option value=".NET">.NET</option>
-                                <option value="iOS">iOS</option>
-                                <option value="Android">Android</option>
-                                <option value="Lead">Lead</option>
-                                <option value="Design">Design</option>
-                                <option value="PHP" selected="selected">PHP</option>
-                                <option value="Python">Python</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="C++">C++</option>
-                                <option value="Unity">Unity</option>
-                                <option value="QA">QA</option>
-                                <option value="SQL">SQL</option>
-                                <option value="Sysadmin">Sysadmin</option>
-                                <option value="Embedded">Embedded</option>
-                                <option value="Project Manager">Project Manager</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="Business Analyst">Business Analyst</option>
-                                <option value="HR">HR</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <!--<select class="form-control" id="main_trend" name="main">-->
+                                <!--<option value=""></option>-->
+                                <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
+                            <!--</select>-->
+                            <multiselect v-model="profile.main_trend" name="main_trend" id="main_trend" @tag="addMainTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
+                                         :searchable="true" :loading="false" :clear-on-select="true"
+                                         :close-on-select="true" :options-limit="300" :limit="50">
+                                <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
+                            </multiselect>
                             <p class="help-block">
                                 Чтобы работодателю легче было найти вас в <a href="/developers/">поиске</a>
                             </p>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Дополнительная категория</label>
-
+                        <label class="col-sm-3 control-label">Secondary trend</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="id_secondary_keyword" name="secondary_keyword">
+                            <select class="form-control" id="second_trend" name="second_trend">
                                 <option value=""></option>
-                                <option value="JavaScript" selected="selected">JavaScript</option>
-                                <option value="Java">Java</option>
-                                <option value=".NET">.NET</option>
-                                <option value="iOS">iOS</option>
-                                <option value="Android">Android</option>
-                                <option value="Lead">Lead</option>
-                                <option value="Design">Design</option>
-                                <option value="PHP">PHP</option>
-                                <option value="Python">Python</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="C++">C++</option>
-                                <option value="Unity">Unity</option>
-                                <option value="QA">QA</option>
-                                <option value="SQL">SQL</option>
-                                <option value="Sysadmin">Sysadmin</option>
-                                <option value="Embedded">Embedded</option>
-                                <option value="Project Manager">Project Manager</option>
-                                <option value="Product Manager">Product Manager</option>
-                                <option value="Business Analyst">Business Analyst</option>
-                                <option value="HR">HR</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Other">Other</option>
+                                <option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>
                             </select>
                             <p class="help-block">
                                 Для особых случаев, например .NET + Lead.
@@ -281,11 +140,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React.</textarea>
                                     Свободный английский (Advanced/Fluent)
                                 </label>
                             </div>
-
                         </div>
-
                     </div>
-
                     <div class="form-group">
 
                         <label class="col-sm-3 control-label">
@@ -428,7 +284,8 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
                             <li>Если вы джуниор, обязательно опишите свой опыт работы. Пусть даже
                                 это учебный или тестовый проект.
                             </li>
-                            <li>Примеры хорошо заполненых профилей <a href="/developers/?sortby=rating">смотрите здесь</a>.
+                            <li>Примеры хорошо заполненых профилей <a
+                                    href="/developers/?sortby=rating">смотрите здесь</a>.
                             </li>
                         </ol>
                     </div>
@@ -439,3 +296,62 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
 
     </form>
 </template>
+
+<script>
+    import vueSlider from 'vue-slider-component'
+    import Multiselect from 'vue-multiselect'
+
+    export default {
+        data() {
+            return {
+                profile: {
+                    experience_time:null,
+                    id: null,
+                    created_at:"",
+                    description:"",
+                    experience:"",
+                    expectations:"",
+                    achievement:"",
+                    english_skill:"",
+                    job_variants:"",
+                    location:"",
+                    main_trend: null,
+                    position:"",
+                    salary:"0.00",
+                    second_trend:"",
+                    updated_at:"",
+                    user_id: null,
+                    trend_options: []
+                },
+                error: false,
+                errorMsg: ''
+            }
+        },
+        methods: {
+            showProfile() {
+                Vue.http.get(
+                    'api/profile/show'
+                ).then(response => {
+                    this.error = false;
+                    this.profile = response.data;
+                }, response => {
+                    this.error = true
+                    this.errorMsg = response.error
+                })
+            },
+            updateProfile(event) {
+                event.preventDefault();
+            },
+            addMainTrend: function (val) {
+             return this.profile.main_trend = val;
+            }
+        },
+        mounted: function () {
+            this.showProfile();
+        },
+        components: {
+            vueSlider,
+            Multiselect
+        }
+    }
+</script>

@@ -39,6 +39,18 @@ Route::group(['middleware' => ['api']], function () {
             ]);
         });
 
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('/show/{id?}', [
+                'uses' => 'ProfileController@show',
+            ]);
+            Route::post('/delete', [
+                'uses' => 'ProfileController@create',
+            ]);
+            Route::put('/update', [
+                'uses' => 'ProfileController@update',
+            ]);
+        });
+
         Route::group(['prefix' => 'skills'], function () {
             Route::get('/all', [
                 'uses' => 'SkillsController@all',
@@ -46,7 +58,6 @@ Route::group(['middleware' => ['api']], function () {
             Route::get('/userSkills', [
                 'uses' => 'SkillsController@userSkills',
             ]);
-
             Route::put('/userSkills', [
                 'uses' => 'SkillsController@updateUserSkills',
             ]);

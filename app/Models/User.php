@@ -7,12 +7,19 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use TagsCloud\Tagging\Taggable;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
     use AccessUserTrait;
     use Taggable;
 
+    /**
+     * @var string
+     */
     public $tagsPrefix = 'user';
 
     /**
@@ -53,6 +60,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class, 'user_id');
     }
+
     /**
      * Hash the users password
      *
