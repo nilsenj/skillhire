@@ -81,28 +81,35 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                                          track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
                                          :searchable="true" :loading="false" :clear-on-select="true"
                                          :close-on-select="true" :options-limit="300" :limit="50">
-                                <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
+                                <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
                             </multiselect>
                             <p class="help-block">
-                                Чтобы работодателю легче было найти вас в <a href="/developers/">поиске</a>
+                                For employers to be easier <a href="/employees/">find you</a>
                             </p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Secondary trend</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="second_trend" name="second_trend">
-                                <option value=""></option>
-                                <option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>
-                            </select>
+                            <!--<select class="form-control" id="second_trend" name="second_trend">-->
+                                <!--<option value=""></option>-->
+                                <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
+                            <!--</select>-->
+
+                            <multiselect v-model="profile.second_trend" name="second_trend" id="second_trend" @tag="addSecondTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
+                                         :searchable="true" :loading="false" :clear-on-select="true"
+                                         :close-on-select="true" :options-limit="300" :limit="50">
+                                <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
+                            </multiselect>
                             <p class="help-block">
-                                Для особых случаев, например .NET + Lead.
+                               For special cases, like .NET + Lead.
                             </p>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Уровень английского языка</label>
+                        <label class="col-sm-3 control-label">English Skill level</label>
 
                         <div class="col-sm-7">
 
@@ -343,8 +350,11 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
                 event.preventDefault();
             },
             addMainTrend: function (val) {
-             return this.profile.main_trend = val;
-            }
+             return this.profile.main_trend = {'name': val};
+            },
+            addSecondTrend: function (val) {
+             return this.profile.second_trend = {'name': val};
+            },
         },
         mounted: function () {
             this.showProfile();

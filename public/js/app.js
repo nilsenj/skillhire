@@ -5144,6 +5144,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5192,7 +5199,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         addMainTrend: function addMainTrend(val) {
-            return this.profile.main_trend = val;
+            return this.profile.main_trend = { 'name': val };
+        },
+        addSecondTrend: function addSecondTrend(val) {
+            return this.profile.second_trend = { 'name': val };
         }
     },
     mounted: function mounted() {
@@ -36571,31 +36581,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('span', {
     slot: "noResult"
-  }, [_vm._v("Oops! No skills found. Consider changing the search query.")])]), _vm._v(" "), _vm._m(3)], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Oops! No trends found. Consider changing the search query.")])]), _vm._v(" "), _vm._m(3)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-sm-3 control-label"
   }, [_vm._v("Secondary trend")]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-6"
-  }, [_c('select', {
-    staticClass: "form-control",
+  }, [_c('multiselect', {
     attrs: {
+      "name": "second_trend",
       "id": "second_trend",
-      "name": "second_trend"
+      "taggable": true,
+      "label": "name",
+      "track-by": "name",
+      "placeholder": "Type to search",
+      "options": _vm.profile.trend_options,
+      "multiple": false,
+      "searchable": true,
+      "loading": false,
+      "clear-on-select": true,
+      "close-on-select": true,
+      "options-limit": 300,
+      "limit": 50
+    },
+    on: {
+      "tag": _vm.addSecondTrend
+    },
+    model: {
+      value: (_vm.profile.second_trend),
+      callback: function($$v) {
+        _vm.profile.second_trend = $$v
+      },
+      expression: "profile.second_trend"
     }
-  }, [_c('option', {
-    attrs: {
-      "value": ""
-    }
-  }), _vm._v(" "), _vm._l((_vm.profile.trend_options), function(item) {
-    return _c('option', {
-      domProps: {
-        "value": item.name
-      }
-    }, [_vm._v(_vm._s(item.name))])
-  })], 2), _vm._v(" "), _c('p', {
+  }, [_c('span', {
+    slot: "noResult"
+  }, [_vm._v("Oops! No trends found. Consider changing the search query.")])]), _vm._v(" "), _c('p', {
     staticClass: "help-block"
-  }, [_vm._v("\n                                Для особых случаев, например .NET + Lead.\n                            ")])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('br'), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('br')])])]), _vm._v(" "), _vm._m(9)])
+  }, [_vm._v("\n                               For special cases, like .NET + Lead.\n                            ")])], 1)]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('br'), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('br')])])]), _vm._v(" "), _vm._m(9)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('p', {
     staticClass: "help-block"
@@ -36633,17 +36656,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('p', {
     staticClass: "help-block"
-  }, [_vm._v("\n                                Чтобы работодателю легче было найти вас в "), _c('a', {
+  }, [_vm._v("\n                                For employers to be easier "), _c('a', {
     attrs: {
-      "href": "/developers/"
+      "href": "/employees/"
     }
-  }, [_vm._v("поиске")])])
+  }, [_vm._v("find you")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-sm-3 control-label"
-  }, [_vm._v("Уровень английского языка")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("English Skill level")]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-7"
   }, [_c('div', {
     staticClass: "radio"
