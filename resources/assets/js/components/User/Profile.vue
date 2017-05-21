@@ -75,7 +75,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                         <div class="col-sm-6">
                             <!--<select class="form-control" id="main_trend" name="main">-->
                                 <!--<option value=""></option>-->
-                                <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
+                                <!--<option v-for="item in profile.trend_options" :valass="form-control" id="second_trend" name="secondue="item.name">{{item.name}}</option>-->
                             <!--</select>-->
                             <multiselect v-model="profile.main_trend" name="main_trend" id="main_trend" @tag="addMainTrend" :taggable="true" label="name"
                                          track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
@@ -91,11 +91,10 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Secondary trend</label>
                         <div class="col-sm-6">
-                            <!--<select class="form-control" id="second_trend" name="second_trend">-->
+                            <!--<select cl_trend">-->
                                 <!--<option value=""></option>-->
                                 <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
                             <!--</select>-->
-
                             <multiselect v-model="profile.second_trend" name="second_trend" id="second_trend" @tag="addSecondTrend" :taggable="true" label="name"
                                          track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
                                          :searchable="true" :loading="false" :clear-on-select="true"
@@ -107,154 +106,57 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                             </p>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="col-sm-3 control-label">English Skill level</label>
-
                         <div class="col-sm-7">
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="english_level" value="no english">
-                                    Нет английского
+                            <div class="radio" v-for="item in profile.all_english_skills">
+                                <label v-if="item.name == profile.english_skill">
+                                    <input type="radio" name="english_level" checked :value="item.name">
+                                    {{item.name}}
                                 </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="english_level" value="basic">
-                                    Слабый английский (Pre-Intermediate)
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="english_level" value="intermediate">
-                                    На уровне чтения тех. документации (Intermediate)
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="english_level" value="good enough">
-                                    Пишу и говорю, хоть и с ошибками (Upper Intermediate)
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="english_level" value="fluent" checked="checked">
-                                    Свободный английский (Advanced/Fluent)
+                                <label v-if="item.name != profile.english_skill">
+                                    <input type="radio" name="english_level" :value="item.name">
+                                    {{item.name}}
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-
                         <label class="col-sm-3 control-label">
-                            Варианты
-
+                            English variants
                         </label>
-
                         <div class="col-sm-7">
-
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="employment_options" value="fulltime">
-                                    Работа на полный день в офисе
+                            <div class="checkbox" v-for="item in profile.all_working_variants">
+                                <label v-if="item.name == profile.english_skill">
+                                    <input type="checkbox" name="employment_options" checked :value="item.name">
+                                    {{item.name}}
+                                </label>
+                                <label v-if="item.name != profile.english_skill">
+                                    <input type="checkbox" name="employment_options" :value="item.name">
+                                    {{item.name}}
                                 </label>
                             </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="employment_options" value="remote"
-                                           checked="checked">
-                                    Удаленная работа (полный день)
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="employment_options" value="freelance"
-                                           checked="checked">
-                                    Фриланс (разовые проекты)
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="employment_options" value="move">
-                                    Переезд в другой город
-                                    Украины
-
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="employment_options" value="relocate">
-                                    Relocate в США или Европу (<a target="_blank"
-                                                                  href="http://lurkmore.to/%D0%9F%D0%BE%D1%80%D0%BE%D1%81%D1%91%D0%BD%D0%BE%D0%BA_%D0%9F%D1%91%D1%82%D1%80#.D0.A1.D1.80.D0.B0.D0.BD.D1.8B.D0.B9_.D1.82.D1.80.D0.B0.D0.BA.D1.82.D0.BE.D1.80">трактор</a>)
-                                </label>
-                            </div>
-
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <h4 class="col-sm-offset-3 col-sm-7">Ищете что-то особенное?</h4>
-
-
+                        <h4 class="col-sm-offset-3 col-sm-7">Looking for something special?</h4>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="looking_for">Ожидания от работы</label>
-
+                        <label class="col-sm-3 control-label" for="expectations">Expectations</label>
                         <div class="col-sm-7">
-                <textarea rows="5" class="input form-control" maxlength="750" name="looking_for" id="looking_for">team work/project required.
-nice team and real challenge.
-project architecture,
-refactoring,
-business logic improvements,
-optimization.</textarea>
-
-                            <p class="help-block">Если знаете, чем точно НЕ хотите
-                                заниматься, напишите и об этом.</p>
-
-                            <p class="charsLeft-warn looking_for-charsLeft-warn text-warning" style="display:none;">
-                                <span class="charsLeftHelp">Осталось символов:</span>
-                                <span class="charsLeft looking_for-charsLeft label label-danger">750</span>
-                            </p>
+                <textarea rows="5" class="input form-control" maxlength="750" name="expectations" v-model="profile.expectations" id="expectations"></textarea>
+                            <span class="label label-info">{{750 - profile.expectations.length}}</span>
                         </div>
                     </div>
 
                     <br>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="highlights">Достижения</label>
+                        <label class="col-sm-3 control-label" for="achievement">Achievement</label>
                         <div class="col-sm-7">
-                <textarea rows="5" class="input form-control" maxlength="750" name="highlights" id="highlights">E-commerce,
-Payment system implementation,
-CRM development,
-Security features,
-Microservices architecture,
-Modular architecture,
-Email delivery systems.
-Code quality improvements,
-refactoring,
-Arhitecture and Code structure design.
-Mentoring teams/projects.
-linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
-
-                            <p class="help-block">Чем конкретнее, тем лучше. Для
-                                интересных предложений must have.</p>
-
-                            <p class="charsLeft-warn highlights-charsLeft-warn text-warning" style="display:none;">
-                                <span class="charsLeftHelp">Осталось символов:</span>
-                                <span class="charsLeft highlights-charsLeft label label-danger">750</span>
-                            </p>
-                        </div>
+                            <textarea rows="5" class="input form-control" maxlength="750" name="achievement" v-model="profile.achievement" id="achievement"></textarea>
+                            <span class="label label-info">{{750 - profile.achievement.length}}</span>
+                       </div>
                     </div>
                     <br>
                 </div>
@@ -269,10 +171,7 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
             <div class="col-sm-10">
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-10">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="gBNUl9rekMbAvlUr2QfjQhZqxTrGdTNM">
-                        <input type="submit" class="btn btn-primary btn-lg form_btn" value="Обновить мой профиль
-                ">
-
+                        <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn" value="Update profile">
                     </div>
                 </div>
 
@@ -312,7 +211,7 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
         data() {
             return {
                 profile: {
-                    experience_time:null,
+                    experience_time: null,
                     id: null,
                     created_at:"",
                     description:"",
@@ -348,6 +247,16 @@ linkedin: https://ua.linkedin.com/in/ivan-nikolenko-913096a9</textarea>
             },
             updateProfile(event) {
                 event.preventDefault();
+                Vue.http.put(
+                    'api/profile/update',
+                    this.profile
+                ).then(response => {
+                    this.error = false;
+                    this.profile = response.data;
+                }, response => {
+                    this.error = true
+                    this.errorMsg = response.error
+                })
             },
             addMainTrend: function (val) {
              return this.profile.main_trend = {'name': val};

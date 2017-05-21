@@ -13,7 +13,11 @@ class CreateEnglishSkillLevelTable extends Migration
      */
     public function up()
     {
-        //
+        \Schema::create('english_skills', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class CreateEnglishSkillLevelTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('english_skills');
     }
 }

@@ -17,7 +17,7 @@ class CreateProfileTable extends Migration
             $table->increments('id');
             $table->string('position')->default('');
             $table->decimal('salary')->default(0);
-            $table->longText('description')->default('');
+//            $table->longText('description')->default('');
             $table->longText('experience')->default('');
             $table->longText('expectations')->default('');
             $table->longText('achievement')->default('');
@@ -31,7 +31,6 @@ class CreateProfileTable extends Migration
             $table->string('main_trend')->default('');
             $table->string('second_trend')->default('');
             $table->string('english_skill')->default('');
-            $table->string('job_variants')->default('');
             $table->string('location')->default('');
             $table->timestamps();
         });

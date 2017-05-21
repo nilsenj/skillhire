@@ -22,7 +22,6 @@ class Profile extends Model
     protected $fillable = [
         'position',
         'salary',
-        'description',
         'experience',
         'expectations',
         'achievement',
@@ -31,43 +30,87 @@ class Profile extends Model
         'main_trend',
         'second_trend',
         'english_skill',
-        'job_variants',
         'location'
     ];
+    /**
+     * @var array
+     */
+    protected $with = ['workingVariants'];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'experience_time' => 'number'
     ];
 
+    /**
+     * @var array
+     */
     protected $appends = [
-        'trend_options'
+        'trend_options',
+        'all_working_variants',
+        'all_english_skills'
     ];
 
+    /**
+     * @return int
+     */
     public function getExperienceTimeAttribute()
     {
-        if($this->attributes['experience_time'] == '0.0') {
+        if ($this->attributes['experience_time'] == '0.0') {
             return 0;
         }
         return $this->attributes['experience_time'];
     }
 
+    /**
+     * @return int
+     */
     public function getSalaryAttribute()
     {
-        if($this->attributes['salary'] == '0.00') {
+        if ($this->attributes['salary'] == '0.00') {
             return 0;
         }
         return $this->attributes['salary'];
     }
+
+    /**
+     * @return array
+     */
+    public function getAllWorkingVariantsAttribute()
+    {
+        return WorkingVariant::all()->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllEnglishSkillsAttribute()
+    {
+        return EnglishSkill::all()->toArray();
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function workingVariants()
+    {
+        return $this->belongsToMany(WorkingVariant::class, 'user_working_variants', 'user_id', 'working_variants_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getTrendOptionsAttribute() {
+    public function getTrendOptionsAttribute()
+    {
         return UserTrend::all()->toArray();
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 }

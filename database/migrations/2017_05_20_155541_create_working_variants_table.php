@@ -13,7 +13,11 @@ class CreateWorkingVariantsTable extends Migration
      */
     public function up()
     {
-        //
+        \Schema::create('working_variants', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class CreateWorkingVariantsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('working_variants');
     }
 }
