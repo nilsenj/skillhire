@@ -5094,6 +5094,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Vue.http.get('api/profile/show').then(function (response) {
                 _this.error = false;
                 _this.profile = response.data;
+                _this.profile.main_trend = { 'name': response.data.main_trend };
+                _this.profile.second_trend = { 'name': response.data.second_trend };
             }, function (response) {
                 _this.error = true;
                 _this.errorMsg = response.error;
@@ -36563,7 +36565,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-sm-3 control-label"
-  }, [_vm._v("\n                            English variants\n                        ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                            Working variants\n                        ")]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-7"
   }, _vm._l((_vm.profile.all_working_variants), function(item) {
     return _c('div', {

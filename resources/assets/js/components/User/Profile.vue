@@ -123,7 +123,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
-                            English variants
+                            Working variants
                         </label>
                         <div class="col-sm-7">
                             <div class="checkbox" v-for="item in profile.all_working_variants">
@@ -240,6 +240,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 ).then(response => {
                     this.error = false;
                     this.profile = response.data;
+                    this.profile.main_trend = {'name': response.data.main_trend};
+                    this.profile.second_trend = {'name': response.data.second_trend};
                 }, response => {
                     this.error = true
                     this.errorMsg = response.error

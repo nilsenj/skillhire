@@ -38,6 +38,10 @@ class ProfileController extends Controller
         try {
             $data = $request->all();
             $user = $request->user();
+            $mainTrend = $data['main_trend'];
+            $secondTrend = $data['second_trend'];
+            $mainTrend = !empty($mainTrend['name']) ? $mainTrend['name'] : '';
+            $secondTrend = !empty($secondTrend['name']) ? $secondTrend['name'] : '';
             $formData = [
                 'position' => !empty($data['position']) ? $data['position'] : '',
                 'salary' => !empty($data['salary']) ? $data['salary'] : '',
@@ -45,8 +49,8 @@ class ProfileController extends Controller
                 'expectations' => !empty($data['expectations']) ? $data['expectations'] : '',
                 'achievement' => !empty($data['achievement']) ? $data['achievement'] : '',
                 'experience_time' => !empty($data['experience_time']) ? $data['experience_time'] : '',
-                'main_trend' => !empty($data['main_trend']) ? $data['main_trend']['name'] : '',
-                'second_trend' => !empty($data['second_trend']) ? $data['second_trend']['name'] : '',
+                'main_trend' => $mainTrend,
+                'second_trend' => $secondTrend,
                 'english_skill' => !empty($data['english_skill']) ? $data['english_skill'] : '',
                 'location' => !empty($data['location']) ? $data['location'] : ''
             ];
