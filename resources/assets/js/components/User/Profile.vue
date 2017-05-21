@@ -242,6 +242,11 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     this.profile = response.data;
                     this.profile.main_trend = {'name': response.data.main_trend};
                     this.profile.second_trend = {'name': response.data.second_trend};
+
+                    this.profile.experience  = this.profile.experience  ? this.profile.experience : '';
+                    this.profile.postion  = this.profile.position ? this.profile.position : '';
+                    this.profile.expectations = this.profile.expectations ? this.profile.expectations : '';
+                    this.profile.achievement = this.profile.achievement ? this.profile.achievement : '';
                 }, response => {
                     this.error = true
                     this.errorMsg = response.error
@@ -254,7 +259,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     this.profile
                 ).then(response => {
                     this.error = false;
-                    this.profile = response.data;
+                    this.profile = this.showProfile();
                 }, response => {
                     this.error = true
                     this.errorMsg = response.error
