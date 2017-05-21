@@ -18,9 +18,9 @@ class CreateProfileTable extends Migration
             $table->string('position')->default('');
             $table->decimal('salary')->default(0);
 //            $table->longText('description')->default('');
-            $table->longText('experience')->default('');
-            $table->longText('expectations')->default('');
-            $table->longText('achievement')->default('');
+            $table->longText('experience')->nullable();
+            $table->longText('expectations')->nullable();
+            $table->longText('achievement')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')
