@@ -38,7 +38,20 @@ class ProfileController extends Controller
         try {
             $data = $request->all();
             $user = $request->user();
-            $profile = $user->profile->update($data);
+            $formData = [
+                'position' => !empty($data['position']) ? $data['position'] : '',
+                'salary' => !empty($data['salary']) ? $data['salary'] : '',
+                'experience' => !empty($data['experience']) ? $data['experience'] : '',
+                'expectations' => !empty($data['expectations']) ? $data['expectations'] : '',
+                'achievement' => !empty($data['achievement']) ? $data['achievement'] : '',
+                'experience_time' => !empty($data['experience_time']) ? $data['experience_time'] : '',
+                'main_trend' => !empty($data['main_trend']) ? $data['main_trend']['name'] : '',
+                'second_trend' => !empty($data['second_trend']) ? $data['second_trend']['name'] : '',
+                'english_skill' => !empty($data['english_skill']) ? $data['english_skill'] : '',
+                'location' => !empty($data['location']) ? $data['location'] : ''
+            ];
+
+            $profile = $user->profile->update($formData);
 
             return response()->json(['data' => $profile], 200);
         } catch (\Throwable $exception) {
