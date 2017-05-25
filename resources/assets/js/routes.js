@@ -35,12 +35,14 @@ export var router = new VueRouter({
                 {
                     path: 'profile',
                     name: 'profile',
-                    component: Profile
+                    component: Profile,
+                    meta: { auth: true }
                 },
                 {
                     path: 'skills',
                     name: 'skills',
-                    component: Skills
+                    component: Skills,
+                    meta: { auth: true }
                 },
             ]
         },

@@ -7,7 +7,8 @@ export default {
         profile: null
     },
     check() {
-        let token = localStorage.getItem('id_token')
+        let token = localStorage.getItem('id_token');
+        var vue = Vue;
         if (token !== null) {
             Vue.http.get(
                 'api/user?token=' + token,
@@ -62,5 +63,8 @@ export default {
         router.push({
             name: 'home'
         })
+    },
+    loggedIn() {
+        return this.user.authenticated;
     }
 }

@@ -38,6 +38,8 @@
 <script>
     import StarRating from 'vue-star-rating'
     import Multiselect from 'vue-multiselect'
+    import auth from '../../auth.js';
+
     export default {
         data() {
             return {

@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -27,6 +26,74 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
 Vue.http.options.root = 'http://skillhire.dev';
 Vue.component('navigation', require('./components/Partials/Navigation.vue'));
+import auth from './auth';
+var user= {authenticated: false};
+router.beforeEach(function (to, from, next) {
+    let token = localStorage.getItem('id_token');
+    var vue = Vue;
+    if (token !== null) {
+        Vue.http.get(
+            'api/user?token=' + token,
+        ).then(response => {
+            user.authenticated = true
+            user.profile = response.data.data
+            if (to.matched.some(record => record.meta.auth)) {
+                // this route requires auth, check if logged in
+                // if not, redirect to login page.
+
+                if (!user.authenticated) {
+                    next({
+                        path: '/signin'
+                    })
+                } else {
+                    next()
+                }
+            } else {
+                next() // make sure to always call next()!
+            }
+        }, (error) => {
+            next({
+                path: '/signin'
+            })
+        });
+    } else {
+        if (to.matched.some(record => record.meta.auth)) {
+            next({
+                path: '/signin'
+            });
+            console.log('Hello');
+        } else {
+            next()
+        }
+    }
+})
+
+Vue.extend({
+    data: function () {
+        return {user: {}};
+    },
+    computed: {
+        auth: function () {
+            return auth;
+        }
+    },
+    methods: {
+        checkLocalStorage: function () {
+            if (localStorage.user) {
+                this.user = JSON.parse(localStorage.user);
+                Vue.http.headers.common['Authorization'] = 'Bearer ' + this.user.api_token;
+                auth.authenticated = true;
+            }
+        },
+        logout: function () {
+            this.user = {};
+            auth.logout();
+        }
+    },
+    ready: function () {
+        this.checkLocalStorage();
+    }
+});
 
 export default Vue;
 

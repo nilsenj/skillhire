@@ -6,7 +6,7 @@
                     <label class="col-sm-3 control-label" for="position">Position</label>
                     <div class="col-sm-7">
                         <input type="text" name="position" autocomplete="off" data-provide="typeahead" id="position"
-                               class="form-control"  v-model="profile.position" placeholder="Senior PHP Developer">
+                               class="form-control" v-model="profile.position" placeholder="Senior PHP Developer">
                     </div>
                 </div>
                 <div class="form-group">
@@ -15,7 +15,8 @@
                         <div class="input-group">
                             <div class="input-group-addon">$</div>
                             <input type="number" name="salary" id="salary" step="100" min="100"
-                                   required="required" v-model="profile.salary" autocomplete="off" class="form-control input salary"
+                                   required="required" v-model="profile.salary" autocomplete="off"
+                                   class="form-control input salary"
                                    placeholder="500">
                         </div>
                         <p class="help-block">Если не уверены сколько написать, посмотрите
@@ -31,7 +32,8 @@
                     <label class="col-sm-3 control-label" for="location">City/Location</label>
                     <div class="col-sm-7">
                         <input type="text" name="location" id="location" autocomplete="off" data-provide="typeahead"
-                               required="required" v-model="profile.location" class="form-control input location" placeholder="Kiev, Lviv, Odessa, Kharkiv">
+                               required="required" v-model="profile.location" class="form-control input location"
+                               placeholder="Kiev, Lviv, Odessa, Kharkiv">
                         <p class="help-block">Город, где вы ищете работу.
                             Например: Киев, Львов.</p>
                     </div>
@@ -42,7 +44,8 @@
                         Experience
                     </label>
                     <div class="col-sm-7">
-              <textarea rows="9" class="form-control" maxlength="750" name="moreinfo" id="moreinfo" placeholder="Php, Laravel, Angular2, Vue.js, Node.js, Express.js,
+              <textarea rows="9" class="form-control" maxlength="750" name="moreinfo" id="moreinfo"
+                        placeholder="Php, Laravel, Angular2, Vue.js, Node.js, Express.js,
 MySQL, Redis, MongoDB,
 JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></textarea>
                         <p class="help-block">Напишите главное, не пишите все
@@ -66,19 +69,23 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                         <div class="col-sm-7" style="z-index: 0;">
                             <vue-slider ref="slider" :height="8"
                                         :dotSize="20" :tooltip="true" :disabled="false" :piecewise="true"
-                            :piecewiseLabel="true" :real-time="true" :min="0" :max="15" :interval="1" v-model="profile.experience_time"></vue-slider>
-                            <p class="help-block experience-slider-value" style="color: inherit;">{{profile.experience_time}} years</p>
+                                        :piecewiseLabel="true" :real-time="true" :min="0" :max="15" :interval="1"
+                                        v-model="profile.experience_time"></vue-slider>
+                            <p class="help-block experience-slider-value" style="color: inherit;">
+                                {{profile.experience_time}} years</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Main trend</label>
                         <div class="col-sm-6">
                             <!--<select class="form-control" id="main_trend" name="main">-->
-                                <!--<option value=""></option>-->
-                                <!--<option v-for="item in profile.trend_options" :valass="form-control" id="second_trend" name="secondue="item.name">{{item.name}}</option>-->
+                            <!--<option value=""></option>-->
+                            <!--<option v-for="item in profile.trend_options" :valass="form-control" id="second_trend" name="secondue="item.name">{{item.name}}</option>-->
                             <!--</select>-->
-                            <multiselect v-model="profile.main_trend" name="main_trend" id="main_trend" @tag="addMainTrend" :taggable="true" label="name"
-                                         track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
+                            <multiselect v-model="profile.main_trend" name="main_trend" id="main_trend"
+                                         @tag="addMainTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options"
+                                         :multiple="false"
                                          :searchable="true" :loading="false" :clear-on-select="true"
                                          :close-on-select="true" :options-limit="300" :limit="50">
                                 <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
@@ -92,17 +99,19 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                         <label class="col-sm-3 control-label">Secondary trend</label>
                         <div class="col-sm-6">
                             <!--<select cl_trend">-->
-                                <!--<option value=""></option>-->
-                                <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
+                            <!--<option value=""></option>-->
+                            <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
                             <!--</select>-->
-                            <multiselect v-model="profile.second_trend" name="second_trend" id="second_trend" @tag="addSecondTrend" :taggable="true" label="name"
-                                         track-by="name" placeholder="Type to search" :options="profile.trend_options" :multiple="false"
+                            <multiselect v-model="profile.second_trend" name="second_trend" id="second_trend"
+                                         @tag="addSecondTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options"
+                                         :multiple="false"
                                          :searchable="true" :loading="false" :clear-on-select="true"
                                          :close-on-select="true" :options-limit="300" :limit="50">
                                 <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
                             </multiselect>
                             <p class="help-block">
-                               For special cases, like .NET + Lead.
+                                For special cases, like .NET + Lead.
                             </p>
                         </div>
                     </div>
@@ -144,7 +153,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="expectations">Expectations</label>
                         <div class="col-sm-7">
-                <textarea rows="5" class="input form-control" maxlength="750" name="expectations" v-model="profile.expectations" id="expectations"></textarea>
+                            <textarea rows="5" class="input form-control" maxlength="750" name="expectations"
+                                      v-model="profile.expectations" id="expectations"></textarea>
                             <span class="label label-info">{{750 - profile.expectations.length}}</span>
                         </div>
                     </div>
@@ -154,9 +164,10 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="achievement">Achievement</label>
                         <div class="col-sm-7">
-                            <textarea rows="5" class="input form-control" maxlength="750" name="achievement" v-model="profile.achievement" id="achievement"></textarea>
+                            <textarea rows="5" class="input form-control" maxlength="750" name="achievement"
+                                      v-model="profile.achievement" id="achievement"></textarea>
                             <span class="label label-info">{{750 - profile.achievement.length}}</span>
-                       </div>
+                        </div>
                     </div>
                     <br>
                 </div>
@@ -171,7 +182,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
             <div class="col-sm-10">
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-10">
-                        <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn" value="Update profile">
+                        <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn"
+                               value="Update profile">
                     </div>
                 </div>
 
@@ -204,6 +216,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
 </template>
 
 <script>
+    import auth from '../../auth.js';
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
 
@@ -213,19 +226,19 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 profile: {
                     experience_time: null,
                     id: null,
-                    created_at:"",
-                    description:"",
-                    experience:"",
-                    expectations:"",
-                    achievement:"",
-                    english_skill:"",
-                    job_variants:"",
-                    location:"",
+                    created_at: "",
+                    description: "",
+                    experience: "",
+                    expectations: "",
+                    achievement: "",
+                    english_skill: "",
+                    job_variants: "",
+                    location: "",
                     main_trend: null,
-                    position:"",
-                    salary:"0.00",
-                    second_trend:"",
-                    updated_at:"",
+                    position: "",
+                    salary: "0.00",
+                    second_trend: "",
+                    updated_at: "",
                     user_id: null,
                     trend_options: []
                 },
@@ -243,8 +256,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     this.profile.main_trend = {'name': response.data.main_trend};
                     this.profile.second_trend = {'name': response.data.second_trend};
 
-                    this.profile.experience  = this.profile.experience  ? this.profile.experience : '';
-                    this.profile.postion  = this.profile.position ? this.profile.position : '';
+                    this.profile.experience = this.profile.experience ? this.profile.experience : '';
+                    this.profile.position = this.profile.position ? this.profile.position : '';
                     this.profile.expectations = this.profile.expectations ? this.profile.expectations : '';
                     this.profile.achievement = this.profile.achievement ? this.profile.achievement : '';
                 }, response => {
@@ -254,9 +267,10 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
             },
             updateProfile(event) {
                 event.preventDefault();
+                let profile = this.profile;
                 Vue.http.put(
                     'api/profile/update',
-                    this.profile
+                    profile
                 ).then(response => {
                     this.error = false;
                     this.profile = this.showProfile();
@@ -266,10 +280,10 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 })
             },
             addMainTrend: function (val) {
-             return this.profile.main_trend = {'name': val};
+                return this.profile.main_trend = {'name': val};
             },
             addSecondTrend: function (val) {
-             return this.profile.second_trend = {'name': val};
+                return this.profile.second_trend = {'name': val};
             },
         },
         mounted: function () {
