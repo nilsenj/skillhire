@@ -1,0 +1,297 @@
+<template>
+    <form method="post" v-on:submit="updateContact" class="js-profile-form form-horizontal form-horizontal-text-left">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="position">Position</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="position" autocomplete="off" data-provide="typeahead" id="position"
+                               class="form-control" v-model="profile.position" placeholder="Senior PHP Developer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="salary">Salary not lower than</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <div class="input-group-addon">$</div>
+                            <input type="number" name="salary" id="salary" step="100" min="100"
+                                   required="required" v-model="profile.salary" autocomplete="off"
+                                   class="form-control input salary"
+                                   placeholder="500">
+                        </div>
+                        <p class="help-block">Если не уверены сколько написать, посмотрите
+                            <a target="_blank"
+                               href="https://djinni.co/salaries/?city=Львов&amp;job=PHP&amp;year=6m">наш виджет зарплат</a>
+                            и
+                            <a target="_blank"
+                               href="/search/?sortby=rating&amp;keywords=PHP">как оценивают себя другие</a>.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="location">City/Location</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="location" id="location" autocomplete="off" data-provide="typeahead"
+                               required="required" v-model="profile.location" class="form-control input location"
+                               placeholder="Kiev, Lviv, Odessa, Kharkiv">
+                        <p class="help-block">Город, где вы ищете работу.
+                            Например: Киев, Львов.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="moreinfo">
+                        Experience
+                    </label>
+                    <div class="col-sm-7">
+              <textarea rows="9" class="form-control" maxlength="750" name="moreinfo" id="moreinfo"
+                        placeholder="Php, Laravel, Angular2, Vue.js, Node.js, Express.js,
+MySQL, Redis, MongoDB,
+JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></textarea>
+                        <p class="help-block">Напишите главное, не пишите все
+                            знакомые аббревиатуры.</p>
+                        <p class="charsLeft-warn moreinfo-charsLeft-warn text-warning" style="display:none;">
+                            <span class="charsLeftHelp">Осталось символов:</span>
+                            <span class="charsLeft moreinfo-charsLeft label label-danger">750</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <h4 class="col-sm-offset-3 col-sm-7" style="margin-bottom: 0;">Additional Info </h4>
+                </div>
+                <div id="extraquestions">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Experience</label>
+                        <div class="col-sm-7" style="z-index: 0;">
+                            <vue-slider ref="slider" :height="8"
+                                        :dotSize="20" :tooltip="true" :disabled="false" :piecewise="true"
+                                        :piecewiseLabel="true" :real-time="true" :min="0" :max="15" :interval="1"
+                                        v-model="profile.experience_time"></vue-slider>
+                            <p class="help-block experience-slider-value" style="color: inherit;">
+                                {{profile.experience_time}} years</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Main trend</label>
+                        <div class="col-sm-6">
+                            <!--<select class="form-control" id="main_trend" name="main">-->
+                            <!--<option value=""></option>-->
+                            <!--<option v-for="item in profile.trend_options" :valass="form-control" id="second_trend" name="secondue="item.name">{{item.name}}</option>-->
+                            <!--</select>-->
+                            <multiselect v-model="profile.main_trend" name="main_trend" id="main_trend"
+                                         @tag="addMainTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options"
+                                         :multiple="false"
+                                         :searchable="true" :loading="false" :clear-on-select="true"
+                                         :close-on-select="true" :options-limit="300" :limit="50">
+                                <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
+                            </multiselect>
+                            <p class="help-block">
+                                For employers to be easier <a href="/employees/">find you</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Secondary trend</label>
+                        <div class="col-sm-6">
+                            <!--<select cl_trend">-->
+                            <!--<option value=""></option>-->
+                            <!--<option v-for="item in profile.trend_options" :value="item.name">{{item.name}}</option>-->
+                            <!--</select>-->
+                            <multiselect v-model="profile.second_trend" name="second_trend" id="second_trend"
+                                         @tag="addSecondTrend" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="profile.trend_options"
+                                         :multiple="false"
+                                         :searchable="true" :loading="false" :clear-on-select="true"
+                                         :close-on-select="true" :options-limit="300" :limit="50">
+                                <span slot="noResult">Oops! No trends found. Consider changing the search query.</span>
+                            </multiselect>
+                            <p class="help-block">
+                                For special cases, like .NET + Lead.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">English Skill level</label>
+                        <div class="col-sm-7">
+                            <div class="radio" v-for="item in profile.all_english_skills">
+                                <label v-if="item.name == profile.english_skill">
+                                    <input type="radio" name="english_level" checked :value="item.name">
+                                    {{item.name}}
+                                </label>
+                                <label v-if="item.name != profile.english_skill">
+                                    <input type="radio" name="english_level" :value="item.name">
+                                    {{item.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Working variants
+                        </label>
+                        <div class="col-sm-7">
+                            <div class="checkbox" v-for="item in profile.all_working_variants">
+                                <label v-if="item.name == profile.english_skill">
+                                    <input type="checkbox" name="employment_options" checked :value="item.name">
+                                    {{item.name}}
+                                </label>
+                                <label v-if="item.name != profile.english_skill">
+                                    <input type="checkbox" name="employment_options" :value="item.name">
+                                    {{item.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h4 class="col-sm-offset-3 col-sm-7">Looking for something special?</h4>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="expectations">Expectations</label>
+                        <div class="col-sm-7">
+                            <textarea rows="5" class="input form-control" maxlength="750" name="expectations"
+                                      v-model="profile.expectations" id="expectations"></textarea>
+                            <span class="label label-info">{{750 - profile.expectations.length}}</span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="achievement">Achievement</label>
+                        <div class="col-sm-7">
+                            <textarea rows="5" class="input form-control" maxlength="750" name="achievement"
+                                      v-model="profile.achievement" id="achievement"></textarea>
+                            <span class="label label-info">{{750 - profile.achievement.length}}</span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn"
+                               value="Update profile">
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <div class="col-sm-offset-3 col-sm-7 help-block">
+                        <h5>ПОДСКАЗКИ ДЖИННА</h5>
+                        <ol>
+                            <li>Хотите интересных предложений? Заинтересуйте.
+                                Лучшие работодатели
+                                переборчивы в контактах и не реагируют на
+                                «шаблонные» профили.
+                            </li>
+                            <li>Если вы джуниор, обязательно опишите свой опыт работы. Пусть даже
+                                это учебный или тестовый проект.
+                            </li>
+                            <li>Примеры хорошо заполненых профилей <a
+                                    href="/developers/?sortby=rating">смотрите здесь</a>.
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</template>
+
+<script>
+    import auth from '../../auth.js';
+    import vueSlider from 'vue-slider-component'
+    import Multiselect from 'vue-multiselect'
+
+    export default {
+        data() {
+            return {
+                profile: {
+                    experience_time: null,
+                    id: null,
+                    created_at: "",
+                    description: "",
+                    experience: "",
+                    expectations: "",
+                    achievement: "",
+                    english_skill: "",
+                    job_variants: "",
+                    location: "",
+                    main_trend: null,
+                    position: "",
+                    salary: "0.00",
+                    second_trend: "",
+                    updated_at: "",
+                    user_id: null,
+                    trend_options: []
+                },
+                error: false,
+                errorMsg: ''
+            }
+        },
+        methods: {
+            showProfile() {
+                Vue.http.get(
+                    'api/profile/show'
+                ).then(response => {
+                    this.error = false;
+                this.profile = response.data;
+                this.profile.main_trend = {'name': response.data.main_trend};
+                this.profile.second_trend = {'name': response.data.second_trend};
+
+                this.profile.experience = this.profile.experience ? this.profile.experience : '';
+                this.profile.position = this.profile.position ? this.profile.position : '';
+                this.profile.expectations = this.profile.expectations ? this.profile.expectations : '';
+                this.profile.achievement = this.profile.achievement ? this.profile.achievement : '';
+            }, response => {
+                    this.error = true
+                    this.errorMsg = response.error
+                })
+            },
+            updateProfile(event) {
+                event.preventDefault();
+                let profile = this.profile;
+                Vue.http.put(
+                    'api/profile/update',
+                    profile
+                ).then(response => {
+                    this.error = false;
+                this.profile = this.showProfile();
+            }, response => {
+                    this.error = true
+                    this.errorMsg = response.error
+                })
+            },
+            addMainTrend: function (val) {
+                return this.profile.main_trend = {'name': val};
+            },
+            addSecondTrend: function (val) {
+                return this.profile.second_trend = {'name': val};
+            },
+        },
+        mounted: function () {
+            this.showProfile();
+        },
+        components: {
+            vueSlider,
+            Multiselect
+        }
+    }
+</script>
