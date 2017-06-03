@@ -34,7 +34,7 @@ class User extends Authenticatable
     /**
      * @var array
      */
-    protected $with = ['roles', 'profile'];
+    protected $with = ['roles', 'profile', 'contacts'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -59,6 +59,14 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function contacts()
+    {
+        return $this->hasOne(Contact::class, 'user_id');
     }
 
     /**

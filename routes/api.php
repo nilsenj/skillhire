@@ -50,6 +50,17 @@ Route::group(['middleware' => ['api']], function () {
                 'uses' => 'ProfileController@update',
             ]);
         });
+        Route::group(['prefix' => 'contacts'], function () {
+            Route::get('/show/{id?}', [
+                'uses' => 'ContactController@show',
+            ]);
+            Route::post('/delete', [
+                'uses' => 'ContactController@create',
+            ]);
+            Route::put('/update', [
+                'uses' => 'ContactController@update',
+            ]);
+        });
 
         Route::group(['prefix' => 'skills'], function () {
             Route::get('/all', [

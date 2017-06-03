@@ -4,6 +4,7 @@ import Register from './components/Auth/Register.vue';
 import Signin from './components/Auth/Signin.vue';
 import Profile from './components/User/Profile.vue';
 import Skills from './components/User/Skills.vue';
+import Contact from './components/User/Contacts.vue';
 import Account from './components/User/Account.vue';
 import Vacancies from './components/Vacancy/Vacancies.vue';
 import Vacancy from './components/Vacancy/Vacancy.vue';
@@ -42,6 +43,12 @@ export var router = new VueRouter({
                     path: 'skills',
                     name: 'skills',
                     component: Skills,
+                    meta: { auth: true }
+                },
+                {
+                    path: 'contact',
+                    name: 'contact',
+                    component: Contact,
                     meta: { auth: true }
                 },
             ]

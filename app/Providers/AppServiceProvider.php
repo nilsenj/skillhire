@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\UserSkillCounter;
@@ -21,10 +22,12 @@ class AppServiceProvider extends ServiceProvider
 
         User::created(function($user) {
             Profile::create(['user_id' => $user->id]);
+            Contact::create(['user_id' => $user->id]);
         });
 
         User::deleted(function(User $user) {
             $user->profile->delete();
+            $user->contacts->delete();
         });
 
         UserTagged::created(function($tagged) {
