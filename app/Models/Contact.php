@@ -24,7 +24,8 @@ class Contact extends Model
         'telegram',
         'github',
         'linkedin',
-        'resume'
+        'resume',
+        'avatar'
     ];
 
     /**

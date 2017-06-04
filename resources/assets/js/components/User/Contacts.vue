@@ -26,7 +26,7 @@
                     <label class="col-sm-3 control-label">Profile Image</label>
 
                     <div class="col-sm-7">
-                        <VueImgInputer v-model="file" accept="image/*" theme="light" bottomText="click to change profile image" placeholder="please select profile image" size="small" @onChange="fileChange"></VueImgInputer>
+                        <VueImgInputer v-model="file" :imgSrc="contact.avatar" accept="image/*" theme="light" bottomText="click to change profile image" placeholder="please select profile image" size="small" @onChange="fileChange"></VueImgInputer>
                     </div>
                 </div>
 
@@ -80,18 +80,9 @@
 
                 <a name="cv"></a>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="github">Resume</label>
-
-                    <div class="col-sm-7" style="margin-top: 7px; margin-bottom: 20px;">
-
-
-                        <input type="file" class="js-cv-input" name="js-cv-input" id="inbox-contact-cv" style="display: none;">
-                        <span class="js-cv-status"><a href="http://cv.djinni.co/2d/c5edc1de8d11e69a67e910b2e717fe/PHP_Angular2NikolenkoIvan.docx.docx" target="_blank">PHP_Angular2NikolenkoIvan.docx.docx</a></span>
-                        <a href="#" class="js-cv-remove-link close inline-close">×</a>
-
-
-                        <input type="hidden" class="js-cv-filename">
-                        <input type="hidden" class="js-cv-url" name="cv_url">
+                    <label class="col-sm-3 control-label" for="resume">Resume</label>
+                    <div class="col-sm-7">
+                        <VueImgInputer v-model="resume" name="resume" :imgSrc="contact.resume" accept="/*" theme="light" id="resume" bottomText="click to change resume" placeholder="please select resume" size="small" @onChange="fileChange"></VueImgInputer>
                     </div>
                 </div>
 
@@ -117,11 +108,13 @@
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
     import VueImgInputer from 'vue-img-inputer'
+    import * as uploader from '../../services/file-upload.service.js';
 
     export default {
         data() {
             return {
                 file: {},
+                resume: {},
                 contact: {
                 },
                 error: false,
@@ -149,13 +142,27 @@
                 ).then(response => {
                     this.error = false;
                     this.contact = this.showContact();
+                    this.contactUpload();
                 }, response => {
                     this.error = true
                     this.errorMsg = response.error
                 })
             },
+            contactUpload() {
+                const avatarformData = new FormData();
+                const resumeFormData = new FormData();
+                if(this.file.name) {
+                    avatarformData.append('file', this.file, this.file.name);
+                    uploader.uploadAvatar(avatarformData);
+                }
+                if(this.resume.name) {
+                    avatarformData.append('resume', this.resume, this.resume.name);
+                    uploader.uploadResume(resumeFormData);
+                }
+
+            },
             fileChange(file, name) {
-                console.log('File:', file);
+                console.log(file);
                 console.log('FileName:', name);
             }
 

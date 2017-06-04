@@ -26,7 +26,8 @@ class CreateContactTable extends Migration
             $table->string('telegram')->default('');
             $table->string('github')->default('');
             $table->string('linkedin')->default('');
-            $table->string('resume')->default('');
+            $table->text('resume')->nullable();
+            $table->text('avatar')->nullable();
             $table->timestamps();
         });
     }

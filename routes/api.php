@@ -50,7 +50,7 @@ Route::group(['middleware' => ['api']], function () {
                 'uses' => 'ProfileController@update',
             ]);
         });
-        Route::group(['prefix' => 'contacts'], function () {
+        Route::group(['prefix' => 'contacts', 'as' => 'contacts.'], function () {
             Route::get('/show/{id?}', [
                 'uses' => 'ContactController@show',
             ]);
@@ -88,6 +88,26 @@ Route::group(['middleware' => ['api']], function () {
                 'uses' => 'SkillsController@update',
             ]);
         });
+    });
+    Route::group(['prefix' => 'file', 'as' => 'file.'], function() {
+        Route::get('/avatar/{day}/{filename}', [
+            'uses' => 'FilesController@avatar',
+            'as' => 'avatar'
+        ]);
+        Route::post('/uploadAvatar', [
+            'uses' => 'FilesController@uploadAvatar',
+            'middleware' => 'jwt.auth',
+            'as' => 'uploadAvatar'
+        ]);
+        Route::post('/uploadResume', [
+            'uses' => 'FilesController@uploadResume',
+            'middleware' => 'jwt.auth',
+            'as' => 'uploadResume'
+        ]);
+        Route::get('/resume/{day}/{filename}', [
+            'uses' => 'FilesController@resume',
+            'as' => 'resume'
+        ]);
     });
 
 });

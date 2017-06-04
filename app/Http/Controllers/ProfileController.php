@@ -44,11 +44,11 @@ class ProfileController extends Controller
             $secondTrend = !empty($secondTrend['name']) ? $secondTrend['name'] : '';
             $formData = [
                 'position' => !empty($data['position']) ? $data['position'] : '',
-                'salary' => !empty($data['salary']) ? $data['salary'] : '',
+                'salary' => !empty($data['salary']) ? $data['salary'] : 0,
                 'experience' => !empty($data['experience']) ? $data['experience'] : '',
                 'expectations' => !empty($data['expectations']) ? $data['expectations'] : '',
                 'achievement' => !empty($data['achievement']) ? $data['achievement'] : '',
-                'experience_time' => !empty($data['experience_time']) ? $data['experience_time'] : '',
+                'experience_time' => !empty($data['experience_time']) ? $data['experience_time'] : 0,
                 'main_trend' => $mainTrend,
                 'second_trend' => $secondTrend,
                 'english_skill' => !empty($data['english_skill']) ? $data['english_skill'] : '',
