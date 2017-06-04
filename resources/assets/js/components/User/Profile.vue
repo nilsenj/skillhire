@@ -1,5 +1,5 @@
 <template>
-    <form method="post" v-on:submit="updateProfile" class="js-profile-form form-horizontal form-horizontal-text-left">
+    <form method="post" v-on:submit="updateProfile" id="updateProfile" class="js-profile-form form-horizontal form-horizontal-text-left">
         <div class="row">
             <div class="col-sm-10">
                 <div class="form-group">
@@ -268,6 +268,10 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
             updateProfile(event) {
                 event.preventDefault();
                 let profile = this.profile;
+                let english = $('input[name=english_level]:checked', '#updateProfile').val();
+                if(english) {
+                    this.profile.english_skill = english;
+                }
                 Vue.http.put(
                     'api/profile/update',
                     profile

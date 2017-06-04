@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -49,7 +50,6 @@ class ContactController extends Controller
                 'fullname' => !empty($data['fullname']) ? $data['fullname'] : '',
                 'email' => !empty($data['email']) ? $data['email'] : ''
             ];
-
             $contacts = $user->contacts->update($formData);
 
             return response()->json(['data' => $contacts], 200);
