@@ -21,7 +21,7 @@ function uploadResume(formData) {
         .then(x => x.data)
         // add url field
         .then(x => x.map(data => Object.assign({},
-            data, { url: `${data.image}` })));
+            data, { url: `${data.resume}` })));
 }
 
 export { uploadAvatar, uploadResume }

@@ -51,19 +51,20 @@ class FilesController extends Controller
         // Handle the user upload of avatar
         if($request->hasFile('resume')){
             $user = $request->user();
-            $avatar = $request->file('resume');
+            $resume = $request->file('resume');
             if(!\Storage::disk('public')->exists('uploads/resumes/'.$day)) {
                 // path does not exist
                 \Storage::disk('public')->makeDirectory('uploads/resumes/'.$day);
             }
-            $filename =  $user->id. time() . '.' . $avatar->getClientOriginalExtension();
+            $filename =  $user->id. time() . '.' . $resume->getClientOriginalExtension();
             $folderPath = storage_path('app/public/uploads/resumes/'.$day);
             $fullpath =  $folderPath. '/' .  $filename;
-            \Image::make($avatar)->save($fullpath);
-            $avatarPath = route('file.resume', ['day' => $day, 'filename' => $filename]);
-            $user->contacts->avatar = $avatarPath;
+            $storagePath = 'uploads/resumes/'.$day;
+            \Storage::disk('public')->putFileAs($storagePath, $request->file('resume'), $filename);
+            $resumePath = route('file.resume', ['day' => $day, 'filename' => $filename]);
+            $user->contacts->avatar = $resumePath;
             $user->contacts->save();
-            return response()->json(['resume' =>  $avatarPath]);
+            return response()->json(['resume' =>  $resumePath]);
         }
     }
 

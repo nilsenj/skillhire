@@ -138,6 +138,11 @@
             updateContact(event) {
                 event.preventDefault();
                 let contact = this.contact;
+                let resume = $("#resume").prop('files')[0];
+                console.log(resume);
+                if(resume) {
+                    this.resume = resume;
+                }
                 Vue.http.put(
                     'api/contacts/update',
                     contact
@@ -158,7 +163,7 @@
                     uploader.uploadAvatar(avatarformData);
                 }
                 if(this.resume.name) {
-                    avatarformData.append('resume', this.resume, this.resume.name);
+                    resumeFormData.append('resume', this.resume, this.resume.name);
                     uploader.uploadResume(resumeFormData);
                 }
 
