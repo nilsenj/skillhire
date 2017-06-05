@@ -82,7 +82,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="resume">Resume</label>
                     <div class="col-sm-7">
-                        <VueImgInputer v-model="resume" name="resume" :imgSrc="contact.resume" accept="/*" theme="light" id="resume" bottomText="click to change resume" placeholder="please select resume" size="small" @onChange="fileChange"></VueImgInputer>
+                        <File name="resume" inputId="resume"></File>
+                        <!--<VueImgInputer v-model="resume" name="resume" :imgSrc="contact.resume" accept="/*" theme="light" id="resume" bottomText="click to change resume" placeholder="please select resume" size="small" @onChange="fileChange"></VueImgInputer>-->
                     </div>
                 </div>
 
@@ -108,6 +109,7 @@
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
     import VueImgInputer from 'vue-img-inputer'
+    import File from '../FileUpload/Main.vue'
     import * as uploader from '../../services/file-upload.service.js';
 
     export default {
@@ -173,7 +175,8 @@
         components: {
             vueSlider,
             Multiselect,
-            VueImgInputer
+            VueImgInputer,
+            File
         }
     }
 </script>
