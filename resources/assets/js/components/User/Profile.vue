@@ -134,14 +134,14 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                         <label class="col-sm-3 control-label">
                             Working variants
                         </label>
-                        <div class="col-sm-7">
+                        <div class="col-sm-7 working_variant">
                             <div class="checkbox" v-for="item in profile.all_working_variants">
-                                <label v-if="item.name == profile.english_skill">
-                                    <input type="checkbox" name="employment_options" checked :value="item.name">
+                                <label v-if="_in_array(item.id, profile.working_variants)">
+                                    <input type="checkbox" name="employment_options" checked :value="item.id">
                                     {{item.name}}
                                 </label>
-                                <label v-if="item.name != profile.english_skill">
-                                    <input type="checkbox" name="employment_options" :value="item.name">
+                                <label v-if="!_in_array(item.id, profile.working_variants)">
+                                    <input type="checkbox" name="employment_options" :value="item.id">
                                     {{item.name}}
                                 </label>
                             </div>
@@ -188,27 +188,6 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 </div>
 
                 <br>
-
-                <div class="form-group">
-
-                    <div class="col-sm-offset-3 col-sm-7 help-block">
-                        <h5>ПОДСКАЗКИ ДЖИННА</h5>
-                        <ol>
-                            <li>Хотите интересных предложений? Заинтересуйте.
-                                Лучшие работодатели
-                                переборчивы в контактах и не реагируют на
-                                «шаблонные» профили.
-                            </li>
-                            <li>Если вы джуниор, обязательно опишите свой опыт работы. Пусть даже
-                                это учебный или тестовый проект.
-                            </li>
-                            <li>Примеры хорошо заполненых профилей <a
-                                    href="/developers/?sortby=rating">смотрите здесь</a>.
-                            </li>
-                        </ol>
-                    </div>
-
-                </div>
             </div>
         </div>
 
@@ -272,6 +251,13 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 if(english) {
                     this.profile.english_skill = english;
                 }
+                let selected_working_variants = [];
+                $('input[name="employment_options"]:checked').each(function(i){
+                    console.log($(this).val());
+                    selected_working_variants[i] = ($(this).val());
+                });
+                profile.selected_working_variants = selected_working_variants;
+                selected_working_variants = [];
                 Vue.http.put(
                     'api/profile/update',
                     profile
@@ -289,6 +275,14 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
             addSecondTrend: function (val) {
                 return this.profile.second_trend = {'name': val};
             },
+            _in_array(what, where) {
+                for(var i=0, length_array=where.length; i < length_array; i++) {
+                    if(what == where[i].id) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         },
         mounted: function () {
             this.showProfile();

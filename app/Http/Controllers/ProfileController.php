@@ -52,10 +52,22 @@ class ProfileController extends Controller
                 'main_trend' => $mainTrend,
                 'second_trend' => $secondTrend,
                 'english_skill' => !empty($data['english_skill']) ? $data['english_skill'] : '',
-                'location' => !empty($data['location']) ? $data['location'] : ''
+                'location' => !empty($data['location']) ? $data['location'] : '',
+                'selected_working_variants' => !empty($data['selected_working_variants']) ? $data['selected_working_variants'] : '',
             ];
 
-            $profile = $user->profile->update($formData);
+            $profile = $user->profile->fill($formData);
+            $profile->save();
+            if(!empty($formData['selected_working_variants'])) {
+                if(is_string($formData['selected_working_variants'])) {
+                    $profile->workingVariants()->sync(explode(',', $formData['selected_working_variants']));
+                }
+                if(is_array($formData['selected_working_variants'])) {
+                    $profile->workingVariants()->sync($formData['selected_working_variants']);
+                }
+            } else {
+                $profile->workingVariants()->sync([]);
+            }
 
             return response()->json(['data' => $profile], 200);
         } catch (\Throwable $exception) {

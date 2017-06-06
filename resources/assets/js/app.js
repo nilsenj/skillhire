@@ -61,7 +61,6 @@ router.beforeEach(function (to, from, next) {
             next({
                 path: '/signin'
             });
-            console.log('Hello');
         } else {
             next()
         }
