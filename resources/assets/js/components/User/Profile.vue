@@ -153,7 +153,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="expectations">Expectations</label>
                         <div class="col-sm-7">
-                            <textarea rows="5" class="input form-control" maxlength="750" name="expectations"
+                            <textarea rows="5" class="input form-control expectations" maxlength="750" name="expectations"
                                       v-model="profile.expectations" id="expectations"></textarea>
                             <span class="label label-info">{{750 - profile.expectations.length}}</span>
                         </div>
@@ -164,7 +164,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="achievement">Achievement</label>
                         <div class="col-sm-7">
-                            <textarea rows="5" class="input form-control" maxlength="750" name="achievement"
+                            <textarea rows="5" class="input form-control achievement" maxlength="750" name="achievement"
                                       v-model="profile.achievement" id="achievement"></textarea>
                             <span class="label label-info">{{750 - profile.achievement.length}}</span>
                         </div>
