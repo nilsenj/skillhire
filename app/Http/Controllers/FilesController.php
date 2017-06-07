@@ -48,23 +48,36 @@ class FilesController extends Controller
      */
     public function uploadResume(Request $request) {
         $day = date('Y-m-d');
-        // Handle the user upload of avatar
-        if($request->hasFile('resume')){
-            $user = $request->user();
-            $resume = $request->file('resume');
-            if(!\Storage::disk('public')->exists('uploads/resumes/'.$day)) {
-                // path does not exist
-                \Storage::disk('public')->makeDirectory('uploads/resumes/'.$day);
-            }
-            $filename =  $user->id. time() . '.' . $resume->getClientOriginalExtension();
-            $folderPath = storage_path('app/public/uploads/resumes/'.$day);
-            $fullpath =  $folderPath. '/' .  $filename;
-            $storagePath = 'uploads/resumes/'.$day;
-            \Storage::disk('public')->putFileAs($storagePath, $request->file('resume'), $filename);
-            $resumePath = route('file.resume', ['day' => $day, 'filename' => $filename]);
-            $user->contacts->avatar = $resumePath;
+        $user = $request->user();
+        $file_status = $request->get('file_status');
+        if($file_status == 'exists' || $file_status == 'empty') {
+            return response()->json(['resume' => null]);
+        }
+        if($file_status == 'removed') {
+            $user->contacts->resume = null;
+            $user->contacts->original_resume_name = null;
             $user->contacts->save();
-            return response()->json(['resume' =>  $resumePath]);
+            return response()->json(['resume' => null]);
+        }
+        if($file_status == 'uploaded') {
+            // Handle the user upload of avatar
+            if($request->hasFile('resume')){
+                $resume = $request->file('resume');
+                if(!\Storage::disk('public')->exists('uploads/resumes/'.$day)) {
+                    // path does not exist
+                    \Storage::disk('public')->makeDirectory('uploads/resumes/'.$day);
+                }
+                $filename =  $user->id. time() . '.' . $resume->getClientOriginalExtension();
+                $folderPath = storage_path('app/public/uploads/resumes/'.$day);
+                $fullpath =  $folderPath. '/' .  $filename;
+                $storagePath = 'uploads/resumes/'.$day;
+                \Storage::disk('public')->putFileAs($storagePath, $request->file('resume'), $filename);
+                $resumePath = route('file.resume', ['day' => $day, 'filename' => $filename]);
+                $user->contacts->resume = $resumePath;
+                $user->contacts->original_resume_name = $resume->getClientOriginalName();
+                $user->contacts->save();
+                return response()->json(['resume' => $resumePath]);
+            }
         }
     }
 

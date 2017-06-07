@@ -25,6 +25,7 @@ class Contact extends Model
         'github',
         'linkedin',
         'resume',
+        'original_resume_name',
         'avatar'
     ];
 

@@ -27,6 +27,7 @@ class CreateContactTable extends Migration
             $table->string('github')->default('');
             $table->string('linkedin')->default('');
             $table->text('resume')->nullable();
+            $table->text('original_resume_name')->nullable();
             $table->text('avatar')->nullable();
             $table->timestamps();
         });

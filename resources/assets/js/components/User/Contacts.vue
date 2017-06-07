@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit="updateContact" class="form-horizontal form-horizontal-text-left js-account-form" method="post" id="contact-dropzone">
+    <form v-on:submit="updateContact" class="form-horizontal form-horizontal-text-left js-account-form" method="post" id="updateContact">
         <div class="row">
             <div class="col-sm-10">
 
@@ -9,10 +9,6 @@
                         <br>
                     </div>
                 </div>
-
-
-
-
                 <div class="form-group">
 
                     <label class="col-sm-3 control-label" for="name">Fullname</label>
@@ -80,10 +76,9 @@
 
                 <a name="cv"></a>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="resume">Resume</label>
+                    <label class="col-sm-3 control-label" >Resume</label>
                     <div class="col-sm-7">
-                        <File name="resume" inputId="resume"></File>
-                        <!--<VueImgInputer v-model="resume" name="resume" :imgSrc="contact.resume" accept="/*" theme="light" id="resume" bottomText="click to change resume" placeholder="please select resume" size="small" @onChange="fileChange"></VueImgInputer>-->
+                        <File name="resume" :fileUpload="fileUpload" :already_exists_file="already_exists_file" inputId="resume"></File>
                     </div>
                 </div>
 
@@ -118,9 +113,25 @@
                 file: {},
                 resume: {},
                 contact: {
+                    avatar: null,
+                    created_at: "",
+                    email: "",
+                    fullname: "",
+                    github: "",
+                    id: null,
+                    linkedin:"",
+                    mobile: "",
+                    original_resume_name: "",
+                    resume: "",
+                    skype: "",
+                    telegram: "",
+                    updated_at: "",
+                    user_id: null
                 },
+                fileUpload: null,
                 error: false,
-                errorMsg: ''
+                errorMsg: '',
+                already_exists_file: null
             }
         },
         methods: {
@@ -130,25 +141,33 @@
                 ).then(response => {
                     this.error = false;
                     this.contact = response.data;
+                    this.fileUpload = null;
+                    if(this.contact.resume) {
+                        this.already_exists_file = {
+                            fileName: this.contact.original_resume_name,
+                            url: this.contact.resume
+                        };
+                    } else {
+                        this.already_exists_file = null;
+                    }
                 }, response => {
-                    this.error = true
+                    this.error = true;
                     this.errorMsg = response.error
                 })
             },
             updateContact(event) {
                 event.preventDefault();
                 let contact = this.contact;
-                let resume = $("#resume").prop('files')[0];
-                console.log(resume);
-                if(resume) {
-                    this.resume = resume;
+                contact.file_status = $("input[name='file_status']").val();
+                let resume = $("#resume").prop('files');
+                if(resume.length) {
+                    this.resume = resume[0];
                 }
                 Vue.http.put(
                     'api/contacts/update',
                     contact
                 ).then(response => {
                     this.error = false;
-                    this.contact = this.showContact();
                     this.contactUpload();
                 }, response => {
                     this.error = true
@@ -162,11 +181,24 @@
                     avatarformData.append('file', this.file, this.file.name);
                     uploader.uploadAvatar(avatarformData);
                 }
+                let resumeStatus = $("input[name='file_status']").val();
+                let updateStatus = true;
                 if(this.resume.name) {
                     resumeFormData.append('resume', this.resume, this.resume.name);
-                    uploader.uploadResume(resumeFormData);
+                    resumeFormData.append('file_status',  $("input[name='file_status']").val());
+                    uploader.uploadResume(resumeFormData, this);
+                    updateStatus = false;
+                    this.$root.$emit('resume_changed');
                 }
-
+                if(resumeStatus == 'removed') {
+                    resumeFormData.append('file_status',  $("input[name='file_status']").val());
+                    uploader.uploadResume(resumeFormData, this);
+                    updateStatus = false;
+                    this.$root.$emit('resume_changed');
+                }
+                if(updateStatus) {
+                    this.showContact();
+                }
             },
             fileChange(file, name) {
                 console.log(file);
@@ -176,6 +208,7 @@
         },
         mounted: function () {
             this.showContact();
+
         },
         components: {
             vueSlider,
