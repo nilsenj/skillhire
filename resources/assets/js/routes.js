@@ -56,22 +56,26 @@ export var router = new VueRouter({
         {
             path: '/vacancies',
             name: 'vacancies',
-            component: Vacancies
+            component: Vacancies,
+            meta: { auth: true }
         },
         {   path: '/vacancies/:vacancyId',
             name: 'vacancy',
             component: Vacancy,
-            props: true
+            props: true,
+            meta: { auth: true }
         },
         {
             path: '/employers',
             name: 'employers',
-            component: Employers
+            component: Employers,
+            meta: { auth: true }
         },
         {
             path: '/employees',
             name: 'employees',
-            component: Employees
+            component: Employees,
+            meta: { auth: true }
         }
 
     ]

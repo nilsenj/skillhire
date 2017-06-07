@@ -6,6 +6,49 @@ export default {
         authenticated: false,
         profile: null
     },
+    authBefore() {
+        var user= {authenticated: false};
+        router.beforeEach(function (to, from, next) {
+            let token = localStorage.getItem('id_token');
+            var vue = Vue;
+            if (token !== null) {
+                Vue.http.get(
+                    'api/user?token=' + token,
+                ).then(response => {
+                    user.authenticated = true
+                    user.profile = response.data.data
+                    if (to.matched.some(record => record.meta.auth)) {
+                        // this route requires auth, check if logged in
+                        // if not, redirect to login page.
+
+                        if (!user.authenticated) {
+                            next({
+                                path: '/signin'
+                            })
+                        } else {
+                            next()
+                        }
+                    } else {
+                        next() // make sure to always call next()!
+                    }
+                }, (error) => {
+                    localStorage.removeItem('id_token');
+                    next({
+                        path: '/signin'
+                    })
+                });
+            } else {
+                if (to.matched.some(record => record.meta.auth)) {
+                    localStorage.removeItem('id_token');
+                    next({
+                        path: '/signin'
+                    });
+                } else {
+                    next()
+                }
+            }
+        })
+    },
     check() {
         let token = localStorage.getItem('id_token');
         var vue = Vue;
@@ -29,8 +72,9 @@ export default {
         ).then(response => {
             context.success = true
         }, response => {
-            context.response = response.data
-            context.error = true
+            localStorage.removeItem('id_token');
+            context.response = response.data;
+            context.error = true;
         })
     },
     signin(context, email, password) {
@@ -52,6 +96,7 @@ export default {
                 name: 'vacancies'
             })
         }, response => {
+            localStorage.removeItem('id_token');
             context.error = true
         })
     },
