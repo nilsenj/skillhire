@@ -19,8 +19,11 @@ import VueRouter from 'vue-router';
 import App from './components/App.vue';
 import VueResource from 'vue-resource';
 import {router} from './routes.js';
+import VeeValidate from 'vee-validate';
+
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.use(VeeValidate);
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
@@ -29,32 +32,32 @@ Vue.component('navigation', require('./components/Partials/Navigation.vue'));
 import auth from './auth';
 auth.authBefore();
 
-Vue.extend({
-    data: function () {
-        return {user: {}};
-    },
-    computed: {
-        auth: function () {
-            return auth;
-        }
-    },
-    methods: {
-        checkLocalStorage: function () {
-            if (localStorage.user) {
-                this.user = JSON.parse(localStorage.user);
-                Vue.http.headers.common['Authorization'] = 'Bearer ' + this.user.api_token;
-                auth.authenticated = true;
-            }
-        },
-        logout: function () {
-            this.user = {};
-            auth.logout();
-        }
-    },
-    ready: function () {
-        this.checkLocalStorage();
-    }
-});
+// Vue.extend({
+//     data: function () {
+//         return {user: {}};
+//     },
+//     computed: {
+//         auth: function () {
+//             return auth;
+//         }
+//     },
+//     methods: {
+//         checkLocalStorage: function () {
+//             if (localStorage.user) {
+//                 this.user = JSON.parse(localStorage.user);
+//                 Vue.http.headers.common['Authorization'] = 'Bearer ' + this.user.api_token;
+//                 auth.authenticated = true;
+//             }
+//         },
+//         logout: function () {
+//             this.user = {};
+//             auth.logout();
+//         }
+//     },
+//     ready: function () {
+//         this.checkLocalStorage();
+//     }
+// });
 
 export default Vue;
 

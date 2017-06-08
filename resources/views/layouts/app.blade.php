@@ -16,6 +16,11 @@
 </head>
 <body>
 <div id="app"></div>
+<script>
+    window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+            ]) !!};
+</script>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

@@ -17,20 +17,31 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers\Auth
+ */
 class AuthController extends Controller
 {
+    /**
+     * @param RegisterFormRequest $request
+     */
     public function register(RegisterFormRequest $request)
     {
         $user = User::create([
             'name' => $request->json('name'),
             'email' => $request->json('email'),
-            'password' => bcrypt($request->json('password')),
+            'password' => $request->json('password'),
         ]);
 
         $user->attachRole(2);
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function signin(Request $request)
     {
         try {

@@ -26,7 +26,8 @@ class Contact extends Model
         'linkedin',
         'resume',
         'original_resume_name',
-        'avatar'
+        'avatar',
+        'fullname'
     ];
 
     /**
@@ -43,6 +44,20 @@ class Contact extends Model
     public function getFullnameAttribute()
     {
         return $this->user()->first()->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setFullnameAttribute($fullname)
+    {
+        if($fullname) {
+            if($this->user()->first()->name != $fullname) {
+                $user = $this->user()->first();
+                $user->name = $fullname;
+                $user->save();
+            }
+        }
     }
 
     /**

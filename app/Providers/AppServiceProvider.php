@@ -20,9 +20,9 @@ class AppServiceProvider extends ServiceProvider
     {
         \Schema::defaultStringLength(191);
 
-        User::created(function($user) {
-            Profile::create(['user_id' => $user->id]);
-            Contact::create(['user_id' => $user->id]);
+        User::created(function(User $user) {
+            $user->profile()->create([]);
+            $user->contacts()->create([]);
         });
 
         User::deleted(function(User $user) {

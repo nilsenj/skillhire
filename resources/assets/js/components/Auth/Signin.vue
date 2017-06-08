@@ -11,7 +11,7 @@
                         <form autocomplete="off" v-on:submit="signin">
                             <div class="form-group">
                                 <label for="email">E-mail</label>
-                                <input type="email" id="email" class="form-control" placeholder="nilsenj@me.com"
+                                <input type="email" v-validate="'required|email'" id="email" class="form-control" placeholder="nilsenj@me.com"
                                        v-model="email" required>
                             </div>
                             <div class="form-group">

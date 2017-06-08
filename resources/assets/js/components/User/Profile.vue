@@ -215,7 +215,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     location: "",
                     main_trend: null,
                     position: "",
-                    salary: "0.00",
+                    salary: "0",
                     second_trend: "",
                     updated_at: "",
                     user_id: null,
@@ -234,6 +234,18 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     this.profile = response.data;
                     this.profile.main_trend = {'name': response.data.main_trend};
                     this.profile.second_trend = {'name': response.data.second_trend};
+                    if(this.profile.salary) {
+                        let salary = this.profile.salary.split('.');
+                        this.profile.salary = salary[0];
+                    } else {
+                        this.profile.salary = 0;
+                    }
+                    if(this.profile.experience_time) {
+                        let experience_time = this.profile.experience_time.split('.');
+                        this.profile.experience_time = experience_time[0];
+                    } else {
+                        this.profile.experience_time = 0;
+                    }
 
                     this.profile.experience = this.profile.experience ? this.profile.experience : '';
                     this.profile.position = this.profile.position ? this.profile.position : '';
@@ -263,7 +275,7 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                     profile
                 ).then(response => {
                     this.error = false;
-                    this.profile = this.showProfile();
+                    this.showProfile();
                 }, response => {
                     this.error = true
                     this.errorMsg = response.error
