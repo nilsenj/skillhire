@@ -1,40 +1,65 @@
 <template>
-    <div class="col-sm-8">
-        <p class="lead">Show Your skill and its level&nbsp;.</p>
-        <div class="alert alert-danger" v-if="error">
-            <p>There was an error, {{error}}</p>
-        </div>
-        <form id="add-skill" class="skills-form">
-            <div class="form-group">
-                <label class="typo__label">Your Skills</label>
-                <multiselect v-model="selectedSkill" id="ajax" @tag="addTag" :taggable="true" label="name"
-                             track-by="name" placeholder="Type to search" :options="skills" :multiple="false"
-                             :searchable="true" :loading="isLoading" :internal-search="true" :clear-on-select="true"
-                             :close-on-select="true" :options-limit="300" :limit="50" :limit-text="limitText"
-                             @search-change="all">
-                    <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
-                </multiselect>
+    <div>
+        <div><div class="row">
+            <div class="col-sm-10">
+            <div class="col-sm-3"></div><div class="col-sm-7">
+        <p class="lead" style="font-weight: 700">Show Your skill and its level&nbsp;.</p>
+            <div class="alert alert-danger" v-if="error">
+                <p>There was an error, {{error}}</p>
             </div>
-            <div class="skills-table-wrapper">
-                <table id="skills-table" class="skills-table editable">
-                    <tbody>
-                    <tr v-for="item in userSkillSet" style="margin-top: 15px;">
-                        <td class="skill-name"><h4 style="padding-right: 10px;">{{item.name}}</h4></td>
-                        <td class="skill-score text-right">
-                            <star-rating :max-rating="10" @rating-selected="updateCounter(item.counter, $event)"
-                                         :rating="item.counter.counter" :showRating="false" :star-size="28"></star-rating>
-                        </td>
-                        <td class="text-danger skill-remove">
-                            <button v-on:click="deleteTag(item, $event)" style="margin-left: 15px" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            </div></div></div>
+        </div>
+
+        <form id="add-skill" class="skills-form js-profile-form form-horizontal form-horizontal-text-left">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="skills">Your Skills</label>
+                        <div class="col-sm-7">
+                            <multiselect v-model="selectedSkill" id="ajax" @tag="addTag" :taggable="true" label="name"
+                                         track-by="name" placeholder="Type to search" :options="skills"
+                                         :multiple="false"
+                                         :searchable="true" :loading="isLoading" :internal-search="true"
+                                         :clear-on-select="true"
+                                         :close-on-select="true" :options-limit="300" :limit="50"
+                                         :limit-text="limitText"
+                                         @search-change="all">
+                                <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
+                            </multiselect>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="skills-table-wrapper">
+                            <table id="skills-table" class="skills-table editable">
+                                <tbody>
+                                <tr v-for="item in userSkillSet" style="margin-top: 15px;">
+                                    <td class="skill-name col-sm-3 control-label"><label class="control-label" style="padding-right: 10px; padding-top: 0">{{item.name}}</label></td>
+                                    <td class="skill-score text-right col-sm-7">
+                                        <star-rating :max-rating="10"
+                                                     @rating-selected="updateCounter(item.counter, $event)"
+                                                     :rating="item.counter.counter" :showRating="false"
+                                                     :star-size="28"></star-rating>
+                                    </td>
+                                    <td class="text-danger skill-remove col-sm-2">
+                                        <button v-on:click="deleteTag(item, $event)" style=""
+                                                class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </template>
-
+<style>
+    .skills-table {
+        width: 100%;
+    }
+</style>
 <script>
     import StarRating from 'vue-star-rating'
     import Multiselect from 'vue-multiselect'

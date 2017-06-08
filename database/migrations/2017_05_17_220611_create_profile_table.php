@@ -21,6 +21,7 @@ class CreateProfileTable extends Migration
             $table->longText('experience')->nullable();
             $table->longText('expectations')->nullable();
             $table->longText('achievement')->nullable();
+            $table->boolean('visible')->default(1);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')

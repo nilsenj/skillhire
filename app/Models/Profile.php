@@ -30,7 +30,8 @@ class Profile extends Model
         'main_trend',
         'second_trend',
         'english_skill',
-        'location'
+        'location',
+        'visible'
     ];
     /**
      * @var array

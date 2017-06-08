@@ -3,21 +3,18 @@
 
         <div class="page-header">
 
-            <h1>Мой аккаунт
-            </h1>
-
-            <form method="post" action="/my/stop/">
-
-                <p style="font-size: 13px;">
-
-                    <b class="text-success">Профиль активен</b>
-                    <a href="/my/stop/">(выключить)</a>
-
-
+            <h1>My Account</h1>
+            <p v-if="visible == 'visible'" style="font-size: 13px;">
+                    <b class="text-success">Profile {{visible}}</b>
+                    <a   v-on:click="toggleVisibility($event)">(turn off)</a>
+                    <a v-if="visible != 'visible'"  v-on:click="toggleVisibility($event)">(turn on)</a>
                     &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Смотреть публичный профиль</a>
-                </p>
-                <input type="hidden" name="csrfmiddlewaretoken" value="gBNUl9rekMbAvlUr2QfjQhZqxTrGdTNM">
-            </form>
+            </p>
+            <p v-if="visible != 'visible'" style="font-size: 13px;">
+                    <b class="text-warning">Profile {{visible}}</b>
+                    <a   v-on:click="toggleVisibility($event)">(turn on)</a>
+                    &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Смотреть публичный профиль</a>
+            </p>
             <ul class="nav nav-pills" style="margin: 1.5em 0 1em;">
                 <router-link tag="li" exact-active-class="active" to="/account/profile">
                     <router-link :to="{ name: 'profile' }">Profile</router-link>
@@ -37,3 +34,51 @@
         <router-view></router-view>
     </div>
 </template>
+
+<script>
+    import auth from '../../auth.js';
+    import vueSlider from 'vue-slider-component'
+    import Multiselect from 'vue-multiselect'
+
+    export default {
+        data() {
+            return {
+                visible: 'visible',
+                error: false,
+                errorMsg: ''
+            }
+        },
+        methods: {
+            getAccountStatus() {
+                Vue.http.get(
+                    'api/profile/getVisibility',
+                    {}
+                ).then(response => {
+                    this.error = false;
+                    this.visible = response.body.visible;
+                }, response => {
+                    this.error = true;
+                    this.errorMsg = response.error;
+                })
+            },
+            toggleVisibility(event) {
+                event.preventDefault();
+                Vue.http.post(
+                    'api/profile/toggleVisibility',
+                    {}
+                ).then(response => {
+                    this.error = false;
+                    this.visible = response.body.visible;
+                }, response => {
+                    this.error = true
+                    this.errorMsg = response.error
+                })
+            }
+        },
+        mounted: function () {
+            this.getAccountStatus();
+        },
+        components: {
+        }
+    }
+</script>

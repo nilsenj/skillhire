@@ -76,6 +76,28 @@ class ProfileController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleVisibility(Request $request) {
+        $user = $request->user();
+        $user->profile->visible = $user->profile->visible ? 0 : 1;
+        $user->profile->save();
+
+        return response()->json(['visible' => $user->profile->visible ? 'visible' : 'not visible']);
+    }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getVisibility(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json(['visible' => $user->profile->visible ? 'visible' : 'not visible']);
+    }
+
+    /**
      * TODO implement form request
      *
      * @param Request $request

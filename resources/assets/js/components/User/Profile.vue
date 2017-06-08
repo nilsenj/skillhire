@@ -1,4 +1,14 @@
 <template>
+    <div>
+        <div><div class="row">
+            <div class="col-sm-10">
+                <div class="col-sm-3"></div><div class="col-sm-7">
+                <p class="lead" style="font-weight: 700">Show Your main profile data&nbsp;.</p>
+                <div class="alert alert-danger" v-if="error">
+                    <p>There was an error, {{error}}</p>
+                </div>
+            </div></div></div>
+        </div>
     <form method="post" v-on:submit="updateProfile" id="updateProfile" class="js-profile-form form-horizontal form-horizontal-text-left">
         <div class="row">
             <div class="col-sm-10">
@@ -190,8 +200,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                 <br>
             </div>
         </div>
-
     </form>
+    </div>
 </template>
 
 <script>

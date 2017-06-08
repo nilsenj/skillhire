@@ -1,14 +1,17 @@
 <template>
+    <div>
+    <div><div class="row">
+        <div class="col-sm-10">
+            <div class="col-sm-3"></div><div class="col-sm-7">
+            <p class="lead" style="font-weight: 700">Your personal data will be visible only for those who you have opened the profile&nbsp;.</p>
+            <div class="alert alert-danger" v-if="error">
+                <p>There was an error, {{error}}</p>
+            </div>
+        </div></div></div>
+    </div>
     <form v-on:submit="updateContact" class="form-horizontal form-horizontal-text-left js-account-form" method="post" id="updateContact">
         <div class="row">
             <div class="col-sm-10">
-
-                <div class="row">
-                    <div class="col-sm-10">
-                        <p class="lead">Поиск работы на Джинне анонимен. Ваши персональные данные увидят только те, кому вы решите открыть контакты.</p>
-                        <br>
-                    </div>
-                </div>
                 <div class="form-group">
 
                     <label class="col-sm-3 control-label" for="name">Fullname</label>
@@ -92,6 +95,7 @@
             </div>
         </div>
     </form>
+    </div>
 </template>
 <style>
     .img-inputer--small {

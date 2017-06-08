@@ -46,6 +46,12 @@ Route::group(['middleware' => ['api']], function () {
             Route::post('/delete', [
                 'uses' => 'ProfileController@create',
             ]);
+            Route::get('/getVisibility', [
+                'uses' => 'ProfileController@getVisibility',
+            ]);
+            Route::post('/toggleVisibility', [
+                'uses' => 'ProfileController@toggleVisibility',
+            ]);
             Route::put('/update', [
                 'uses' => 'ProfileController@update',
             ]);
