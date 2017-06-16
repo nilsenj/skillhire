@@ -167,7 +167,11 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
         </div>
     </div>
 </template>
-
+<style>
+    #updateProfile .multiselect--active {
+            z-index: 3 !important;
+    }
+</style>
 <script>
     import auth from '../../auth.js';
     import vueSlider from 'vue-slider-component'
