@@ -23,11 +23,13 @@ class AppServiceProvider extends ServiceProvider
         User::created(function(User $user) {
             $user->profile()->create([]);
             $user->contacts()->create([]);
+            $user->additionalSettings()->create([]);
         });
 
         User::deleted(function(User $user) {
             $user->profile->delete();
             $user->contacts->delete();
+            $user->additionalSettings->delete();
         });
 
         UserTagged::created(function($tagged) {

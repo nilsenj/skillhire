@@ -67,6 +67,14 @@ Route::group(['middleware' => ['api']], function () {
                 'uses' => 'ContactController@update',
             ]);
         });
+        Route::group(['prefix' => 'additional_settings', 'as' => 'additional_settings.'], function () {
+            Route::get('/show/{id?}', [
+                'uses' => 'AdditionalSettingsController@show',
+            ]);
+            Route::put('/update', [
+                'uses' => 'AdditionalSettingsController@update',
+            ]);
+        });
 
         Route::group(['prefix' => 'skills'], function () {
             Route::get('/all', [

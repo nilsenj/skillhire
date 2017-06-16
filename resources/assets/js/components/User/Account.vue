@@ -25,16 +25,22 @@
                 <router-link tag="li" exact-active-class="active" to="/account/contact">
                     <router-link :to="{ name: 'contact' }">Contacts and Resume</router-link>
                 </router-link>
-                <li><a href="/my/review/">HR-review</a></li>
-                <li><a href="/my/subscriptions/">Рассылки</a></li>
-                <li><a href="/my/stoplist/">Стоп-лист</a></li>
-                <li><a href="/my/kill9/">Удалить профиль</a></li>
+                <router-link tag="li" exact-active-class="active" to="/account/additional_settings">
+                    <router-link :to="{ name: 'additional_settings' }">Additional Settings</router-link>
+                </router-link>
             </ul>
         </div>
         <router-view></router-view>
     </div>
 </template>
-
+<style>
+    .form-group {
+        margin-left: 0!important;
+    }
+    .form-inline .form-group {
+        width: 100%;
+    }
+</style>
 <script>
     import auth from '../../auth.js';
     import vueSlider from 'vue-slider-component'

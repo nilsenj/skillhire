@@ -6,6 +6,7 @@ import Profile from './components/User/Profile.vue';
 import Skills from './components/User/Skills.vue';
 import Contact from './components/User/Contacts.vue';
 import Account from './components/User/Account.vue';
+import AdditionalSettings from './components/User/AdditionalSettings.vue';
 import Vacancies from './components/Vacancy/Vacancies.vue';
 import Vacancy from './components/Vacancy/Vacancy.vue';
 import Employers from './components/Employers/Employers.vue';
@@ -49,6 +50,12 @@ export var router = new VueRouter({
                     path: 'contact',
                     name: 'contact',
                     component: Contact,
+                    meta: { auth: true }
+                },
+                {
+                    path: 'additional_settings',
+                    name: 'additional_settings',
+                    component: AdditionalSettings,
                     meta: { auth: true }
                 },
             ]
