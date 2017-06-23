@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVacanciesTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,28 +13,22 @@ class CreateVacanciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vacancies', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->longText('body');
-            $table->integer('author_id')->unsigned();
-            $table->foreign('author_id')
+            $table->string('name');
+            $table->string('title')->nullable();
+            $table->longText('description');
+            $table->integer('publisher_id')->nullable();
+            $table->foreign('publisher_id')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')
-                ->on('companies')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->string('site')->nullable();
 
             $table->string('location')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -44,7 +38,6 @@ class CreateVacanciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vacancies');
-
+        //
     }
 }

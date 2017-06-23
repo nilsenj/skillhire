@@ -4,8 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Vacancy
+ * @package App\Models
+ */
 class Vacancy extends Model
 {
+    /**
+     * @var array
+     */
     protected $fillable = [
         'title',
         'body',
@@ -13,9 +20,24 @@ class Vacancy extends Model
         'company_description',
         'location'
     ];
-    protected $with = ['author'];
+    /**
+     * @var array
+     */
+    protected $with = ['author', 'companies'];
 
-    public function author() {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
+    {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'company_id');
     }
 }
