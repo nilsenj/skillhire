@@ -16,9 +16,8 @@ class Vacancy extends Model
     protected $fillable = [
         'title',
         'body',
-        'company',
-        'company_description',
-        'location'
+        'location',
+        'company_id'
     ];
     /**
      * @var array
@@ -34,10 +33,10 @@ class Vacancy extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()
     {
-        return $this->hasOne(Company::class, 'company_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }

@@ -24,13 +24,16 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Models\Vacancy::class, function (Faker\Generator $faker) {
-
+    $company = \App\Models\Company::create([
+        'name' => $faker->company,
+        'description' => implode(' ',$faker->sentences(6)),
+        'title' => implode(' ',$faker->sentences(2))
+    ]);
     return [
         'title' => $faker->words(4, true),
         'author_id' => $faker->numberBetween(1,21),
         'body' => implode(' ', $faker->sentences(10)),
-        'company' => $faker->company,
-        'company_description' => implode(' ',$faker->sentences()),
+        'company_id' => $company->id,
         'location' => $faker->countryISOAlpha3 . ', ' .$faker->city
     ];
 });
