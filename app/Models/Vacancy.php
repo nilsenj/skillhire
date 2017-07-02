@@ -22,7 +22,7 @@ class Vacancy extends Model
     /**
      * @var array
      */
-    protected $with = ['author', 'companies'];
+    protected $with = ['author', 'company'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
