@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,26 @@ class VacanciesController extends Controller
         $vacancies['count'] = $this->vacancy->count();
 
         return json_encode($vacancies);
+    }
+
+    /**
+     * @param Request $request
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function byUser(Request $request, $id = null)
+    {
+        $data = $request->all();
+        if(!$id && $request->user()->exists())
+        {
+            $user = $request->user();
+        } else {
+            $user = User::findOrFail($id);
+        }
+        $userTags = $request->user()->tags->toArray();
+        $data = [];
+
+        return response()->json($data);
     }
 
     /**

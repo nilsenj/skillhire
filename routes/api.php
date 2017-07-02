@@ -37,6 +37,9 @@ Route::group(['middleware' => ['api']], function () {
             Route::put('/update', [
                 'uses' => 'VacanciesController@update',
             ]);
+            Route::get('/byUser/{id?}', [
+                'uses' => 'VacanciesController@byUser',
+            ]);
         });
 
         Route::group(['prefix' => 'profile'], function () {

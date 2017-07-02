@@ -19,6 +19,11 @@ class Vacancy extends Model
         'location',
         'company_id'
     ];
+
+    /**
+     * @var array
+     */
+    protected $appends = ['formatted_published'];
     /**
      * @var array
      */
@@ -38,5 +43,13 @@ class Vacancy extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormattedPublishedAttribute()
+    {
+        return $this->created_at->diffForHumans();
     }
 }

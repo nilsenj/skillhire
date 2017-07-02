@@ -1,7 +1,6 @@
 <template>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
-
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                         aria-expanded="false" aria-controls="navbar">
@@ -18,7 +17,7 @@
                         <router-link :to="{ name: 'home' }">Home</router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'vacancies' }">Vacancies</router-link>
+                        <router-link :to="'/vacancies/all'">Vacancies</router-link>
                     </li>
                     <li>
                         <router-link :to="{ name: 'employees' }">Employees</router-link>

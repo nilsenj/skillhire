@@ -7,7 +7,9 @@ import Skills from './components/User/Skills.vue';
 import Contact from './components/User/Contacts.vue';
 import Account from './components/User/Account.vue';
 import AdditionalSettings from './components/User/AdditionalSettings.vue';
-import Vacancies from './components/Vacancy/Vacancies.vue';
+import MainVacancy from './components/Vacancy/Main.vue';
+import AllVacancies from './components/Vacancy/All.vue';
+import VacanciesByProfile from './components/Vacancy/Bymyprofile.vue';
 import Vacancy from './components/Vacancy/Vacancy.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
@@ -63,14 +65,30 @@ export var router = new VueRouter({
         {
             path: '/vacancies',
             name: 'vacancies',
-            component: Vacancies,
-            meta: { auth: true }
-        },
-        {   path: '/vacancies/:vacancyId',
-            name: 'vacancy',
-            component: Vacancy,
-            props: true,
-            meta: { auth: true }
+            component: MainVacancy,
+            meta: { auth: true },
+            children: [
+                {
+                    path: 'all',
+                    name: 'all',
+                    default: true,
+                    component: AllVacancies,
+                    meta: { auth: true }
+                },
+                {
+                    path: 'bymyprofile',
+                    name: 'bymyprofile',
+                    component: VacanciesByProfile,
+                    meta: { auth: true }
+                },
+                {   path: ':vacancyId',
+                    name: 'vacancy',
+                    component: Vacancy,
+                    props: true,
+                    meta: { auth: true }
+                },
+                { path: '*', redirect: '/vacancies/all' }
+            ]
         },
         {
             path: '/employers',
