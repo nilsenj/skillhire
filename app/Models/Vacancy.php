@@ -17,7 +17,9 @@ class Vacancy extends Model
         'title',
         'body',
         'location',
-        'company_id'
+        'company_id',
+        'main_trend',
+        'working_variant'
     ];
 
     /**

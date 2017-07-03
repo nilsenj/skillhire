@@ -11,6 +11,9 @@ import MainVacancy from './components/Vacancy/Main.vue';
 import AllVacancies from './components/Vacancy/All.vue';
 import VacanciesByProfile from './components/Vacancy/Bymyprofile.vue';
 import Vacancy from './components/Vacancy/Vacancy.vue';
+import VacancyLocationFilter from './components/Vacancy/LocationFilter.vue';
+import VacancyVariantFilter from './components/Vacancy/VariantsFilter.vue';
+import VacancyTrendFilter from './components/Vacancy/TrendFilter.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
 
@@ -84,6 +87,24 @@ export var router = new VueRouter({
                 {   path: ':vacancyId',
                     name: 'vacancy',
                     component: Vacancy,
+                    props: true,
+                    meta: { auth: true }
+                },
+                {   path: 'location/:location',
+                    name: 'location',
+                    component: VacancyLocationFilter,
+                    props: true,
+                    meta: { auth: true }
+                },
+                {   path: 'trend/:trend',
+                    name: 'trend',
+                    component: VacancyTrendFilter,
+                    props: true,
+                    meta: { auth: true }
+                },
+                {   path: 'variant/:variant',
+                    name: 'variant',
+                    component: VacancyVariantFilter,
                     props: true,
                     meta: { auth: true }
                 },

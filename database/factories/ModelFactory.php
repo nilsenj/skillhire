@@ -29,11 +29,16 @@ $factory->define(App\Models\Vacancy::class, function (Faker\Generator $faker) {
         'description' => implode(' ',$faker->sentences(6)),
         'title' => implode(' ',$faker->sentences(2))
     ]);
+
+    $userTrends = \App\Models\UserTrend::all()->toArray();
+    $userVariants = \App\Models\WorkingVariant::all()->toArray();
     return [
         'title' => $faker->words(4, true),
         'author_id' => $faker->numberBetween(1,21),
         'body' => implode(' ', $faker->sentences(10)),
         'company_id' => $company->id,
+        'main_trend' => $userTrends[$faker->numberBetween(0, count($userTrends) - 1)]['name'],
+        'working_variant' => $userVariants[$faker->numberBetween(0, count($userVariants) - 1)]['name'],
         'location' => $faker->countryISOAlpha3 . ', ' .$faker->city
     ];
 });

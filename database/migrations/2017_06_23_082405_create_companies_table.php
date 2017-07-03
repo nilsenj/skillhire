@@ -36,7 +36,5 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('companies', function (Blueprint $table) {
 //            $table->dropPrimary('companies_publisher_id_primary');
         });
-
-
     }
 }

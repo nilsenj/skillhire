@@ -41,7 +41,7 @@
         },
         methods: {
             all() {
-                this.$http.get('api/vacancy/byUser').then(response => {
+                this.$http.get('api/vacancy/byLocation/' + this.$route.params.location).then(response => {
 
                     // get body data
                     this.vacancies = response.body;

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-8" style="padding-left: 0;">
                 <ul class="list-unstyled list-jobs">
-                    <li v-for="item in vacancies" class="list-jobs__item">
+                    <li v-for="item in variants" class="list-jobs__item">
                         <div class="list-jobs__title">
                             <router-link :to="{ name: 'vacancy', params: { vacancyId: item.id }}">{{ item.title }}
                             </router-link>
@@ -36,15 +36,15 @@
     export default {
         data() {
             return {
-                vacancies: {}
+                variants: {}
             }
         },
         methods: {
             all() {
-                this.$http.get('api/vacancy/byUser').then(response => {
+                this.$http.get('api/vacancy/byVariant/' + this.$route.params.variant).then(response => {
 
                     // get body data
-                    this.vacancies = response.body;
+                    this.variants = response.body;
 
                 }, response => {
                     // error callback
@@ -52,7 +52,7 @@
             }
         },
         mounted: function () {
-            $("#vacancy_title").html("Vacancies by skills");
+            $("#vacancy_title").html("Vacancies by working variant");
             this.all()
         }
     }
