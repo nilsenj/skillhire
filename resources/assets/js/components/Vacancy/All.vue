@@ -128,7 +128,7 @@
         display: inline-block;
         margin: 0 2px 5px 0;
         padding: 4px 7px 3px;
-        background-color: #f5f8fb;
+        background-color: white;
         border-radius: 3px;
     }
 </style>
