@@ -2,7 +2,6 @@
     <div class="container">
 
         <div class="page-header">
-
             <h1>My Account</h1>
             <p v-if="visible == 'visible'" style="font-size: 13px;">
                     <b class="text-success">Profile {{visible}}</b>

@@ -19,11 +19,6 @@ class CreateCompaniesTable extends Migration
             $table->string('title')->nullable();
             $table->longText('description');
             $table->integer('publisher_id')->nullable();
-            $table->foreign('publisher_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->string('site')->nullable();
 
             $table->string('location')->nullable();
@@ -38,6 +33,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('companies');
     }
 }

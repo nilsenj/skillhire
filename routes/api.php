@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
     Route::post('/register', [
         'uses' => 'Auth\AuthController@register',
     ]);
@@ -37,6 +37,21 @@ Route::group(['middleware' => ['api']], function () {
             Route::put('/update', [
                 'uses' => 'VacanciesController@update',
             ]);
+            Route::get('/byUser/{id?}', [
+                'uses' => 'VacanciesController@byUser',
+            ]);
+            Route::get('/getDistinctLocations', [
+                'uses' => 'VacanciesController@getDistinctLocations',
+            ]);
+            Route::get('/byLocation/{location}', [
+                'uses' => 'VacanciesController@byLocation',
+            ]);
+            Route::get('/byTrend/{trend}', [
+                'uses' => 'VacanciesController@byTrend',
+            ]);
+            Route::get('/byVariant/{variant}', [
+                'uses' => 'VacanciesController@byVariant',
+            ]);
         });
 
         Route::group(['prefix' => 'profile'], function () {
@@ -56,6 +71,13 @@ Route::group(['middleware' => ['api']], function () {
                 'uses' => 'ProfileController@update',
             ]);
         });
+
+        Route::group(['prefix' => 'working_variants'], function () {
+            Route::get('/', [
+                'uses' => 'WorkingVariantsController@index',
+            ]);
+        });
+
         Route::group(['prefix' => 'contacts', 'as' => 'contacts.'], function () {
             Route::get('/show/{id?}', [
                 'uses' => 'ContactController@show',
@@ -65,6 +87,11 @@ Route::group(['middleware' => ['api']], function () {
             ]);
             Route::put('/update', [
                 'uses' => 'ContactController@update',
+            ]);
+        });
+        Route::group(['prefix' => 'trends', 'as' => 'trends.'], function () {
+            Route::get('/', [
+                'uses' => 'UserTrendsController@index',
             ]);
         });
         Route::group(['prefix' => 'additional_settings', 'as' => 'additional_settings.'], function () {
@@ -103,25 +130,25 @@ Route::group(['middleware' => ['api']], function () {
             ]);
         });
     });
-    Route::group(['prefix' => 'file', 'as' => 'file.'], function() {
-        Route::get('/avatar/{day}/{filename}', [
-            'uses' => 'FilesController@avatar',
-            'as' => 'avatar'
-        ]);
-        Route::post('/uploadAvatar', [
-            'uses' => 'FilesController@uploadAvatar',
-            'middleware' => 'jwt.auth',
-            'as' => 'uploadAvatar'
-        ]);
-        Route::post('/uploadResume', [
-            'uses' => 'FilesController@uploadResume',
-            'middleware' => 'jwt.auth',
-            'as' => 'uploadResume'
-        ]);
-        Route::get('/resume/{day}/{filename}', [
-            'uses' => 'FilesController@resume',
-            'as' => 'resume'
-        ]);
-    });
 
+});
+Route::group(['prefix' => 'file', 'as' => 'file.'], function () {
+    Route::get('/avatar/{day}/{filename}', [
+        'uses' => 'FilesController@avatar',
+        'as' => 'avatar'
+    ]);
+    Route::post('/uploadAvatar', [
+        'uses' => 'FilesController@uploadAvatar',
+        'middleware' => 'jwt.auth',
+        'as' => 'uploadAvatar'
+    ]);
+    Route::post('/uploadResume', [
+        'uses' => 'FilesController@uploadResume',
+        'middleware' => 'jwt.auth',
+        'as' => 'uploadResume'
+    ]);
+    Route::get('/resume/{day}/{filename}', [
+        'uses' => 'FilesController@resume',
+        'as' => 'resume'
+    ]);
 });

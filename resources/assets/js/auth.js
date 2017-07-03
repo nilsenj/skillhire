@@ -33,6 +33,7 @@ export default {
                     }
                 }, (error) => {
                     localStorage.removeItem('id_token');
+                    localStorage.removeItem('client');
                     next({
                         path: '/signin'
                     })
@@ -40,6 +41,7 @@ export default {
             } else {
                 if (to.matched.some(record => record.meta.auth)) {
                     localStorage.removeItem('id_token');
+                    localStorage.removeItem('client');
                     next({
                         path: '/signin'
                     });
@@ -58,6 +60,7 @@ export default {
             ).then(response => {
                 this.user.authenticated = true
                 this.user.profile = response.data.data
+                localStorage.setItem('client', response.data.data.name);
             })
         }
     },
@@ -73,6 +76,7 @@ export default {
             context.success = true
         }, response => {
             localStorage.removeItem('id_token');
+            localStorage.removeItem('client');
             context.response = response.data;
             context.error = true;
         })
@@ -86,22 +90,23 @@ export default {
             }
         ).then(response => {
             context.error = false
-            localStorage.setItem('id_token', response.data.meta.token)
+            localStorage.setItem('id_token', response.data.meta.token);
+            localStorage.setItem('client', response.data.meta.name);
             Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
 
             this.user.authenticated = true
             this.user.profile = response.data.data
 
-            router.push({
-                name: 'vacancies'
-            })
+            router.push('/vacancies/all')
         }, response => {
             localStorage.removeItem('id_token');
+            localStorage.removeItem('client');
             context.error = true
         })
     },
     signout() {
         localStorage.removeItem('id_token')
+        localStorage.removeItem('client')
         this.user.authenticated = false
         this.user.profile = null
 

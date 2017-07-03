@@ -16,6 +16,8 @@ class CreateVacanciesTable extends Migration
         Schema::create('vacancies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('main_trend')->nullable();
+            $table->string('working_variant')->nullable();
             $table->longText('body');
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')
@@ -23,14 +25,12 @@ class CreateVacanciesTable extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
             $table->string('location')->nullable();
             $table->timestamps();
         });
