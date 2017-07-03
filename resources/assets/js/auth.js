@@ -97,9 +97,7 @@ export default {
             this.user.authenticated = true
             this.user.profile = response.data.data
 
-            router.push({
-                name: 'vacancies'
-            })
+            router.push('/vacancies/all')
         }, response => {
             localStorage.removeItem('id_token');
             localStorage.removeItem('client');
