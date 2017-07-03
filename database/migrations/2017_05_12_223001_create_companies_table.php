@@ -33,8 +33,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies', function (Blueprint $table) {
-//            $table->dropPrimary('companies_publisher_id_primary');
-        });
+        Schema::dropIfExists('companies');
     }
 }
