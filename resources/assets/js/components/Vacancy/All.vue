@@ -27,33 +27,13 @@
                                 {{variant.name}}
                             </router-link>
                         </div>
-
-
-                        <div class="jobs-filter__set-title">
-                            По тексту вакансии
-
-                        </div>
-                        <form method="get" id="searchform" class="form">
-
-
-                            <div class="input-group">
-
-                                <input type="text" id="keywords" name="keywords" class="input form-control"
-                                       placeholder="Например: Node.js" value="">
-                                <span class="input-group-btn">
-                <input type="submit" class="btn btn-default" value="→">
-              </span>
-                            </div>
-                        </form>
-                        <br>
-
                     </div>
                 </div>
 
             </div>
             <div class="col-sm-8 col-sm-pull-4" style="padding-left: 0;">
                 <ul class="list-unstyled list-jobs">
-                    <li v-for="item in vacancies.items" class="list-jobs__item">
+                    <li v-for="item in vacancies" class="list-jobs__item">
                         <div class="list-jobs__title">
                             <router-link :to="{ name: 'vacancy', params: { vacancyId: item.id }}">{{ item.title }}
                             </router-link>
@@ -74,16 +54,10 @@
                         </div>
                     </li>
                 </ul>
-
-                <ul class="pager" style="text-align: left;">
-                    <li>
-
-                        <a href="/jobs/?page=2">вперед →</a>
-
-                    </li>
-                </ul>
-
-
+                <vue-simple-pagination v-bind:pagination="pagination"
+                                       v-on:click.native="all(pagination.current_page)"
+                                       :offset="4">
+                </vue-simple-pagination>
             </div>
         </div>
     </div>
@@ -140,15 +114,35 @@
                 vacancies: {},
                 trends: {},
                 locations: {},
-                variants: {}
+                variants: {},
+                counter: 0,
+                pagination: {
+                    total: 0,
+                    per_page: 2,
+                    from: 1,
+                    to: 0,
+                    current_page: 1
+                },
+                offset: 4,
             }
         },
         methods: {
-            all() {
-                this.$http.get('api/vacancy/all').then(response => {
+            all(page) {
+                var _this = this;
+//                $.ajax({
+//                    url: 'api/vacancy/all?page='+page,
+//                    success: (response) => {
+//                        _this.vacancies = response.body;
+//                        _this.pagination = response;
+//                    }
+//                });
+
+                this.$http.get('api/vacancy/all?page='+page).then(response => {
 
                     // get body data
-                    this.vacancies = response.body;
+                    _this.vacancies = response.body.items.data;
+                    delete(response.body.items.data);
+                    _this.pagination = response.body.items;
 
                 }, response => {
                     // error callback
@@ -188,7 +182,8 @@
         },
         mounted: function () {
             $("#vacancy_title").html("Vacancies");
-            this.all();
+            let page =  this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+            this.all(page);
             this.allTrends();
             this.getDistinctLocations();
             this.getVariants();

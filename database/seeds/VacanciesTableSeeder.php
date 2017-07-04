@@ -11,6 +11,6 @@ class VacanciesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Vacancy::class, 20)->create();
+        factory(\App\Models\Vacancy::class, 200)->create();
     }
 }

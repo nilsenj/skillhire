@@ -34,10 +34,10 @@ class VacanciesController extends Controller
     {
         $data = $request->all();
         $vacancies = [];
-        $vacancies['items'] = $this->vacancy->all()->toArray();
+        $vacancies['items'] = $this->vacancy->paginate(10);
         $vacancies['count'] = $this->vacancy->count();
 
-        return json_encode($vacancies);
+        return response()->json($vacancies);
     }
 
     /**
@@ -54,7 +54,7 @@ class VacanciesController extends Controller
             $user = User::findOrFail($id);
         }
         $userTrend = $user->profile->main_trend;
-        $vacancies = $this->vacancy->where('main_trend', $userTrend)->get();
+        $vacancies = $this->vacancy->where('main_trend', $userTrend)->paginate(2);
 
         return response()->json($vacancies);
     }

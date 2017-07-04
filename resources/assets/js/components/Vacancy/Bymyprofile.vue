@@ -24,6 +24,10 @@
                         </div>
                     </li>
                 </ul>
+                <vue-simple-pagination v-bind:pagination="pagination"
+                                       v-on:click.native="all(pagination.current_page)"
+                                       :offset="4">
+                </vue-simple-pagination>
             </div>
         </div>
     </div>
@@ -36,15 +40,28 @@
     export default {
         data() {
             return {
-                vacancies: {}
+                vacancies: {},
+                counter: 0,
+                pagination: {
+                    total: 0,
+                    per_page: 2,
+                    from: 1,
+                    to: 0,
+                    current_page: 1
+                },
+                offset: 4,
             }
         },
         methods: {
-            all() {
-                this.$http.get('api/vacancy/byUser').then(response => {
+            all(page) {
+                let _this = this;
+                let pager = page ? '?page='+page : '';
+                this.$http.get('api/vacancy/byUser'+pager).then(response => {
 
                     // get body data
-                    this.vacancies = response.body;
+                    _this.vacancies = response.data.data;
+                    delete(response.data.data);
+                    _this.pagination = response.body;
 
                 }, response => {
                     // error callback
@@ -53,7 +70,8 @@
         },
         mounted: function () {
             $("#vacancy_title").html("Vacancies by skills");
-            this.all()
+            let page =  this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+            this.all(page);
         }
     }
 </script>

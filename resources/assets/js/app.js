@@ -24,6 +24,8 @@ import VeeValidate from 'vee-validate';
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(VeeValidate);
+Vue.component('vue-pagination', require('./components/System/pagination.vue'));
+Vue.component('vue-simple-pagination', require('./components/System/simple-pagination.vue'));
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
