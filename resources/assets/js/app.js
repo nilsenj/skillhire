@@ -34,33 +34,6 @@ Vue.component('navigation', require('./components/Partials/Navigation.vue'));
 import auth from './auth';
 auth.authBefore();
 
-// Vue.extend({
-//     data: function () {
-//         return {user: {}};
-//     },
-//     computed: {
-//         auth: function () {
-//             return auth;
-//         }
-//     },
-//     methods: {
-//         checkLocalStorage: function () {
-//             if (localStorage.user) {
-//                 this.user = JSON.parse(localStorage.user);
-//                 Vue.http.headers.common['Authorization'] = 'Bearer ' + this.user.api_token;
-//                 auth.authenticated = true;
-//             }
-//         },
-//         logout: function () {
-//             this.user = {};
-//             auth.logout();
-//         }
-//     },
-//     ready: function () {
-//         this.checkLocalStorage();
-//     }
-// });
-
 export default Vue;
 
 

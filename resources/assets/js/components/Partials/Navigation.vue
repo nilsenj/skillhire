@@ -23,7 +23,10 @@
                         <router-link :to="{ name: 'employees' }">Employees</router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'employers' }">Employers</router-link>
+                        <router-link v-if="!auth.user.roles.display_name !== 'employer'"  :to="{ name: 'employers' }">Employers</router-link>
+                    </li>
+                    <li>
+                        <router-link v-if="auth.user.roles.display_name == 'admin'"  :to="{ name: 'admin' }">Admin Page</router-link>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -64,6 +67,11 @@
 <script>
     export default {
         props: ['auth'],
+        data() {
+           return {
+               roles: []
+           }
+        },
         methods: {
             signout() {
                 this.auth.signout()

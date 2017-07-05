@@ -16,6 +16,7 @@ import VacancyVariantFilter from './components/Vacancy/VariantsFilter.vue';
 import VacancyTrendFilter from './components/Vacancy/TrendFilter.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
+import MainAdmin from './components/Admin/Main.vue';
 
 export var router = new VueRouter({
     routes: [
@@ -110,6 +111,13 @@ export var router = new VueRouter({
                 },
                 { path: '*', redirect: '/vacancies/all' }
             ]
+        },
+        {
+            path: '/admin',
+            name: 'admin',
+            component: MainAdmin,
+            meta: { auth: true, isAdmin: true },
+            children: []
         },
         {
             path: '/employers',

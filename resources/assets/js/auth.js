@@ -4,7 +4,8 @@ import {router} from './routes.js';
 export default {
     user: {
         authenticated: false,
-        profile: null
+        profile: null,
+        roles : []
     },
     authBefore() {
         var user= {authenticated: false};
@@ -17,17 +18,26 @@ export default {
                 ).then(response => {
                     user.authenticated = true
                     user.profile = response.data.data
+                    user.roles = response.data.data.roles
                     if (to.matched.some(record => record.meta.auth)) {
                         // this route requires auth, check if logged in
                         // if not, redirect to login page.
-
                         if (!user.authenticated) {
                             next({
                                 path: '/signin'
-                            })
+                            });
                         } else {
                             next()
                         }
+                        console.log(user);
+                        if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
+                            next()
+                        } else {
+                            next({
+                                path: '/vacancies/all'
+                            });
+                        }
+
                     } else {
                         next() // make sure to always call next()!
                     }
@@ -58,8 +68,9 @@ export default {
             Vue.http.get(
                 'api/user?token=' + token,
             ).then(response => {
-                this.user.authenticated = true
-                this.user.profile = response.data.data
+                this.user.authenticated = true;
+                this.user.profile = response.data.data;
+                this.user.roles = response.data.data.roles;
                 localStorage.setItem('client', response.data.data.name);
             })
         }

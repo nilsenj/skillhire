@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
         $user->attachRole(1);
 
         $user = \App\Models\User::UpdateOrCreate([
-            'name' => 'nilsenj',
+            'name' => 'badCoder',
 
             'email' => 'nikoleivan@gmail.com',
 
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
         $user->attachRole(2);
 
         factory(\App\Models\User::class, 20)->create()->each(function ($u) {
-            $u->attachRole(2);
+            $u->attachRole(3);
         });
     }
 }

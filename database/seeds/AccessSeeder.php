@@ -17,20 +17,19 @@ class AccessSeeder extends Seeder
             Role::create([
                 'name'         => 'Admin',
                 'display_name' => 'admin',
-                'description'  => 'can manage admin panel, add, delete, update, manage licenses, manage products, manage users', // optional
+                'description'  => '', // optional
             ]);
 
-            Role::create([
-                'name'         => 'Client',
-                'display_name' => 'client',
-                'description'  => 'can\'t be present in admin panel, can\'t delete users but can delete theirs info', // optional
-            ]);
             Role::create([
                 'name'         => 'Employee',
                 'display_name' => 'employee',
-                'description'  => 'create vacancy, hire employers', // optional
+                'description'  => '', // optional
             ]);
-
+            Role::create([
+                'name'         => 'Employer',
+                'display_name' => 'employer',
+                'description'  => '', // optional
+            ]);
         }
 
         if (!Permission::find(1)) {
@@ -46,7 +45,7 @@ class AccessSeeder extends Seeder
                 'Can Update',
                 'Delete vacancy',
                 'Create vacancy',
-                'Hire employers',
+                'Hire employers'
             ];
             foreach ($permissionsAdmin as $permission) {
                 $perm = Permission::updateOrCreate([
@@ -62,7 +61,7 @@ class AccessSeeder extends Seeder
 
             $roleClient = Role::find(2);
             foreach ($listIds as $key => $permission) {
-                if ($key >= 9 && $key <= 11) {
+                if ($key >= 10 && $key <= 11) {
                     $roleClient->attachPermission(Permission::find($permission));
                 }
             }

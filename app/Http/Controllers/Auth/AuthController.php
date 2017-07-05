@@ -34,7 +34,7 @@ class AuthController extends Controller
             'password' => $request->json('password'),
         ]);
 
-        $user->attachRole(2);
+        $user->attachRole(3);
     }
 
 
