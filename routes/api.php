@@ -72,6 +72,12 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
             ]);
         });
 
+        Route::group(['prefix' => 'proposals'], function () {
+            Route::post('/store', [
+                'uses' => 'ProposalsController@store',
+            ]);
+        });
+
         Route::group(['prefix' => 'working_variants'], function () {
             Route::get('/', [
                 'uses' => 'WorkingVariantsController@index',

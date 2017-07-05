@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Messenger\Traits\Messagable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use TagsCloud\Tagging\Taggable;
@@ -16,6 +17,7 @@ class User extends Authenticatable
     use Notifiable;
     use AccessUserTrait;
     use Taggable;
+    use Messagable;
 
     /**
      * @var string

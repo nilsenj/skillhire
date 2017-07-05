@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProposalsTable extends Migration
+class CreateParticipantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateProposalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposals', function (Blueprint $table) {
+        Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('subject');
+            $table->integer('proposal_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->timestamp('last_read');
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 
@@ -29,7 +32,9 @@ class CreateProposalsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('proposals', function(Blueprint $table) {
+        Schema::drop('participants', function(Blueprint $table) {
+            $table->dropForeign('participants_proposal_id_foreign');
+            $table->dropForeign('participants_user_id_foreign');
             $table->dropSoftDeletes();
         });
     }

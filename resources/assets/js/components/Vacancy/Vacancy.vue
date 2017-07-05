@@ -54,14 +54,14 @@
                     <div class="col-sm-10">
                         <div class="js-inbox-action-btns">
                             <a name="reply"></a>
-                            <form method="post" class="js-inbox-reply-form">
+                            <form method="post" id="createProposal" class="js-inbox-reply-form">
                                 <h3 id="myModalLabel">Reply on vacancy</h3>
 
                                 <div class="form-group">
-                        <textarea class="form-control" id="message" name="message" rows="6">Hello, {{vacancy.author.name}}. I'm very interested in your vacancy "{{vacancy.title}}". So let's talk. {{username}}</textarea>
+                        <textarea class="form-control" v-model="message" id="message" name="message" rows="6"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" name="job_apply"
+                                    <button class="btn btn-primary" v-on:click="storeProposal" name="job_apply"
                                             data-loading-text="Contact Employee...">Open Contacts And start communication
                                     </button>
                                 </div>
@@ -97,9 +97,11 @@
             return {
                 vacancy: {},
                 vacancy_reply: {},
-                username: ""
+                username: "",
+                message: ""
             }
         },
+        props: ['auth'],
         methods: {
             show() {
                 this.$http.get('api/vacancy/show/' + this.$route.params.vacancyId).then(response => {
@@ -111,11 +113,26 @@
                     // error callback
                     $("#vacancy_title").html(this.vacancy.title);
                 });
-            }
+            },
+            storeProposal(e) {
+                e.preventDefault();
+                let data = {
+                    subject: this.vacancy.title,
+                    message: this.message
+                };
+                this.$http.post('api/proposal/store', data).then(response => {
+                    console.log(response);
+                }, response => {
+                    console.error(response);
+                    // error callback
+                    $("#vacancy_title").html(this.vacancy.title);
+                });
+            },
         },
         mounted: function () {
             this.show();
             this.username = localStorage.getItem('client');
+            this.message = 'Hello, '+vacancy.author.name+'. I\'m very interested in your vacancy "'+vacancy.title+'". So let\'s talk. '+username+'';
         }
     }
 </script>

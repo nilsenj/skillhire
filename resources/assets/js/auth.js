@@ -27,16 +27,18 @@ export default {
                                 path: '/signin'
                             });
                         } else {
-                            next()
+                            if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
+                                next()
+                            } else {
+                                if(to.matched.some(record => record.meta.isAdmin)) {
+                                    next({
+                                        path: '/vacancies/all'
+                                    });
+                                } else {
+                                    next()
+                                }
+                            }
                         }
-                        if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
-                            next()
-                        } else {
-                            next({
-                                path: '/vacancies/all'
-                            });
-                        }
-
                     } else {
                         next() // make sure to always call next()!
                     }

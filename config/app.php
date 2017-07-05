@@ -182,7 +182,8 @@ return [
         \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         \App\Core\Access\AccessServiceProvider::class,
         TagsCloud\Tagging\Providers\TaggingServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        \App\Core\Messenger\MessengerServiceProvider::class
     ],
 
     /*
@@ -232,7 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+
     ],
 
 ];
