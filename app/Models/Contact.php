@@ -35,7 +35,8 @@ class Contact extends Model
      */
     protected $appends = [
         'fullname',
-        'email'
+        'email',
+        'default_image'
     ];
 
     /**
@@ -44,6 +45,14 @@ class Contact extends Model
     public function getFullnameAttribute()
     {
         return $this->user()->first()->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultImageAttribute()
+    {
+        return asset('img/user_not_found.jpg');
     }
 
     /**

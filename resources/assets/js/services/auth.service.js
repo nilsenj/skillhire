@@ -1,6 +1,5 @@
-import Vue from './app.js';
-import {router} from './routes.js';
-
+import Vue from '../app.js';
+import {router} from '../routes.js';
 export default {
     user: {
         authenticated: false,
@@ -8,7 +7,7 @@ export default {
         roles : []
     },
     authBefore() {
-        var user= {authenticated: false};
+        var _this = this;
         router.beforeEach(function (to, from, next) {
             let token = localStorage.getItem('id_token');
             var vue = Vue;
@@ -16,32 +15,7 @@ export default {
                 Vue.http.get(
                     'api/user?token=' + token,
                 ).then(response => {
-                    user.authenticated = true
-                    user.profile = response.data.data
-                    user.roles = response.data.data.roles
-                    if (to.matched.some(record => record.meta.auth)) {
-                        // this route requires auth, check if logged in
-                        // if not, redirect to login page.
-                        if (!user.authenticated) {
-                            next({
-                                path: '/signin'
-                            });
-                        } else {
-                            if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
-                                next()
-                            } else {
-                                if(to.matched.some(record => record.meta.isAdmin)) {
-                                    next({
-                                        path: '/vacancies/all'
-                                    });
-                                } else {
-                                    next()
-                                }
-                            }
-                        }
-                    } else {
-                        next() // make sure to always call next()!
-                    }
+                    _this.beforeHandler(response, to, from, next);
                 }, (error) => {
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('client');
@@ -61,6 +35,35 @@ export default {
                 }
             }
         })
+    },
+    beforeHandler(response, to, from, next) {
+        var user= {authenticated: false};
+        user.authenticated = true
+        user.profile = response.data.data
+        user.roles = response.data.data.roles
+        if (to.matched.some(record => record.meta.auth)) {
+            // this route requires auth, check if logged in
+            // if not, redirect to login page.
+            if (!user.authenticated) {
+                next({
+                    path: '/signin'
+                });
+            } else {
+                if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
+                    next();
+                } else {
+                    if(to.matched.some(record => record.meta.isAdmin)) {
+                        next({
+                            path: '/vacancies/all'
+                        });
+                    } else {
+                        next();
+                    }
+                }
+            }
+        } else {
+            next(); // make sure to always call next()!
+        }
     },
     check() {
         let token = localStorage.getItem('id_token');
@@ -117,10 +120,10 @@ export default {
         })
     },
     signout() {
-        localStorage.removeItem('id_token')
-        localStorage.removeItem('client')
-        this.user.authenticated = false
-        this.user.profile = null
+        localStorage.removeItem('id_token');
+        localStorage.removeItem('client');
+        this.user.authenticated = false;
+        this.user.profile = null;
 
         router.push({
             name: 'home'

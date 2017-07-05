@@ -68,6 +68,5 @@
                 this.file_status = 'exists';
             }
         },
-
     }
 </script>

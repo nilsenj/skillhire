@@ -23,7 +23,7 @@
 
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     export default {
         data() {
             return {
@@ -33,7 +33,6 @@
         },
         methods: {
             all() {
-                console.log(this.auth);
                 this.$http.get('api/vacancy/byUser').then(response => {
 
                     // get body data

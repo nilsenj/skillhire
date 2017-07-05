@@ -1,18 +1,17 @@
 <template>
     <div class="container">
-
         <div class="page-header">
             <h1>My Account</h1>
             <p v-if="visible == 'visible'" style="font-size: 13px;">
                     <b class="text-success">Profile {{visible}}</b>
                     <a   v-on:click="toggleVisibility($event)">(turn off)</a>
                     <a v-if="visible != 'visible'"  v-on:click="toggleVisibility($event)">(turn on)</a>
-                    &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Смотреть публичный профиль</a>
+                    &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Watch public profile</a>
             </p>
             <p v-if="visible != 'visible'" style="font-size: 13px;">
                     <b class="text-warning">Profile {{visible}}</b>
                     <a   v-on:click="toggleVisibility($event)">(turn on)</a>
-                    &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Смотреть публичный профиль</a>
+                    &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Watch public profile</a>
             </p>
             <ul class="nav nav-pills" style="margin: 1.5em 0 1em;">
                 <router-link tag="li" exact-active-class="active" to="/account/profile">
@@ -41,7 +40,7 @@
     }
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
 

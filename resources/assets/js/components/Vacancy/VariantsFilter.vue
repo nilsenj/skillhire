@@ -32,7 +32,7 @@
 
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     export default {
         data() {
             return {
@@ -42,7 +42,6 @@
         methods: {
             all() {
                 this.$http.get('api/vacancy/byVariant/' + this.$route.params.variant).then(response => {
-
                     // get body data
                     this.variants = response.body;
 

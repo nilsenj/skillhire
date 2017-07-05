@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
 
     export default {
         data() {

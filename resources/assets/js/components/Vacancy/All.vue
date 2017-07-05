@@ -107,7 +107,7 @@
     }
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     export default {
         data() {
             return {
@@ -129,17 +129,8 @@
         props: ['auth'],
         methods: {
             all(page) {
-                console.log(this.auth);
                 var _this = this;
-//                $.ajax({
-//                    url: 'api/vacancy/all?page='+page,
-//                    success: (response) => {
-//                        _this.vacancies = response.body;
-//                        _this.pagination = response;
-//                    }
-//                });
-
-                this.$http.get('api/vacancy/all?page='+page).then(response => {
+                this.$http.get('api/vacancy/all?page=' + page).then(response => {
 
                     // get body data
                     _this.vacancies = response.body.items.data;
@@ -162,11 +153,8 @@
             },
             getDistinctLocations() {
                 this.$http.get('api/vacancy/getDistinctLocations').then(response => {
-
                     // get body data
                     this.locations = response.body;
-                    console.log(response.body);
-
                 }, response => {
                     // error callback
                 });
@@ -184,7 +172,7 @@
         },
         mounted: function () {
             $("#vacancy_title").html("Vacancies");
-            let page =  this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+            let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
             this.all(page);
             this.allTrends();
             this.getDistinctLocations();

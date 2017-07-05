@@ -36,7 +36,7 @@
 
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     export default {
         data() {
             return {
@@ -57,7 +57,6 @@
                 let _this = this;
                 let pager = page ? '?page='+page : '';
                 this.$http.get('api/vacancy/byUser'+pager).then(response => {
-
                     // get body data
                     _this.vacancies = response.data.data;
                     delete(response.data.data);

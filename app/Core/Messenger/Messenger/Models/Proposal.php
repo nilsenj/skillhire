@@ -158,18 +158,20 @@ class Proposal extends Eloquent
     /**
      * Adds users to this Proposal
      *
-     * @param array $participants list of all participants
-     * @return void
+     * @param array $participants
+     * @return array|null
      */
-    public function addParticipants(array $participants)
+    public function addParticipants(array $participants): ?array
     {
+        $participantsArr = [];
         if (count($participants)) {
             foreach ($participants as $user_id) {
-                Participant::firstOrCreate([
+                $participantsArr[] = Participant::firstOrCreate([
                     'user_id' => $user_id,
                     'proposal_id' => $this->id,
                 ]);
             }
+            return $participantsArr;
         }
     }
 

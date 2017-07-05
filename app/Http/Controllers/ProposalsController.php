@@ -66,19 +66,7 @@ class ProposalsController extends Controller
 
         $proposal->markAsRead($userId);
 
-        return view('messenger.show', compact('proposal', 'users'));
-    }
-
-    /**
-     * Creates a new message proposal
-     *
-     * @return mixed
-     */
-    public function create(Request $request)
-    {
-        $users = User::where('id', '!=', $request->id())->get();
-
-        return view('messenger.create', compact('users'));
+        return response()->json(compact('proposal', 'users'));
     }
 
     /**
@@ -97,7 +85,7 @@ class ProposalsController extends Controller
         );
 
         // Message
-        Message::create(
+        $message = Message::create(
             [
                 'proposal_id' => $proposal->id,
                 'user_id'   => $request->user()->id,
@@ -105,8 +93,7 @@ class ProposalsController extends Controller
             ]
         );
 
-        // Sender
-        Participant::create(
+        $sender = Participant::create(
             [
                 'proposal_id' => $proposal->id,
                 'user_id'   => $request->user()->id,
@@ -114,12 +101,17 @@ class ProposalsController extends Controller
             ]
         );
 
+        $participants = [];
         // Recipients
         if (Input::has('recipients')) {
-            $proposal->addParticipants($input['recipients']);
+            $participants = $proposal->addParticipants($input['recipients']);
         }
 
-        return redirect('messages');
+        return response()->json([
+            'proposal_id' => $proposal->id,
+            'participant_id' => $sender->id,
+            'participants' => $participants,
+            'message' => $message], 200);
     }
 
     /**

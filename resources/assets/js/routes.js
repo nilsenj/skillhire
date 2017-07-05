@@ -17,7 +17,7 @@ import VacancyTrendFilter from './components/Vacancy/TrendFilter.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
 import MainAdmin from './components/Admin/Main.vue';
-import auth from './auth.js';
+import auth from './services/auth.service.js';
 
 export var router = new VueRouter({
     routes: [
@@ -135,6 +135,5 @@ export var router = new VueRouter({
             component: Employees,
             meta: { auth: true }
         }
-
     ]
 });

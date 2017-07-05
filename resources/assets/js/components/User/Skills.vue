@@ -15,16 +15,16 @@
                 <div class="form-group">
                     <label class="control-label" for="skills">Your Skills</label>
                     <multiselect v-model="selectedSkill" id="ajax" @tag="addTag" :taggable="true"
-                                     label="name"
-                                     track-by="name" placeholder="Type to search" :options="skills"
-                                     :multiple="false"
-                                     :searchable="true" :loading="isLoading" :internal-search="true"
-                                     :clear-on-select="true"
-                                     :close-on-select="true" :options-limit="300" :limit="50"
-                                     :limit-text="limitText"
-                                     @search-change="all">
-                            <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
-                        </multiselect>
+                                 label="name"
+                                 track-by="name" placeholder="Type to search" :options="skills"
+                                 :multiple="false"
+                                 :searchable="true" :loading="isLoading" :internal-search="true"
+                                 :clear-on-select="true"
+                                 :close-on-select="true" :options-limit="300" :limit="50"
+                                 :limit-text="limitText"
+                                 @search-change="all">
+                        <span slot="noResult">Oops! No skills found. Consider changing the search query.</span>
+                    </multiselect>
                 </div>
                 <div class="form-group">
                     <div class="skills-table-wrapper">
@@ -32,7 +32,7 @@
                             <tbody>
                             <tr v-for="item in userSkillSet" style="margin-top: 15px;">
                                 <td class="skill-name control-label"><label class="control-label"
-                                                                                     style="padding-right: 10px; padding-top: 0">{{item.name}}</label>
+                                                                            style="padding-right: 10px; padding-top: 0">{{item.name}}</label>
                                 </td>
                                 <td class="skill-score">
                                     <star-rating :max-rating="10"
@@ -63,7 +63,7 @@
 <script>
     import StarRating from 'vue-star-rating'
     import Multiselect from 'vue-multiselect'
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
 
     export default {
         data() {

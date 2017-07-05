@@ -82,7 +82,7 @@
     }
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
     import VueImgInputer from 'vue-img-inputer'

@@ -54,7 +54,7 @@ class VacanciesController extends Controller
             $user = User::findOrFail($id);
         }
         $userTrend = $user->profile->main_trend;
-        $vacancies = $this->vacancy->where('main_trend', $userTrend)->paginate(2);
+        $vacancies = $this->vacancy->where('main_trend', $userTrend)->paginate(10);
 
         return response()->json($vacancies);
     }

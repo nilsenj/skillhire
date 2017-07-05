@@ -31,7 +31,7 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
 Vue.http.options.root = window.BASE_URL ? window.BASE_URL : 'http://skillhire.dev';
 Vue.component('navigation', require('./components/Partials/Navigation.vue'));
-import auth from './auth';
+import auth from './services/auth.service';
 auth.authBefore();
 
 export default Vue;

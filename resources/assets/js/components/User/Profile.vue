@@ -158,8 +158,8 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
                         <br>
                     </div>
                     <div class="form-group">
-                            <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn"
-                                   value="Update profile">
+                        <input type="submit" v-on:click="updateProfile" class="btn btn-primary btn-lg form_btn"
+                               value="Update profile">
                     </div>
                 </div>
                 <br>
@@ -169,11 +169,11 @@ JavaScript, Linux, CSS, HTML, Backbone, React." v-model="profile.experience"></t
 </template>
 <style>
     #updateProfile .multiselect--active {
-            z-index: 3 !important;
+        z-index: 3 !important;
     }
 </style>
 <script>
-    import auth from '../../auth.js';
+    import auth from '../../services/auth.service.js';
     import vueSlider from 'vue-slider-component'
     import Multiselect from 'vue-multiselect'
 
