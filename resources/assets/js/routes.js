@@ -17,6 +17,7 @@ import VacancyTrendFilter from './components/Vacancy/TrendFilter.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
 import MainAdmin from './components/Admin/Main.vue';
+import auth from './auth.js';
 
 export var router = new VueRouter({
     routes: [
@@ -39,6 +40,7 @@ export var router = new VueRouter({
             path: '/account',
             name: 'account',
             component: Account,
+            props: { auth: auth },
             children: [
                 {
                     path: 'profile',
@@ -71,13 +73,14 @@ export var router = new VueRouter({
             name: 'vacancies',
             component: MainVacancy,
             meta: { auth: true },
+            props: { default: true },
             children: [
                 {
                     path: 'all',
                     name: 'all',
                     default: true,
                     component: AllVacancies,
-                    meta: { auth: true }
+                    meta: { auth: true },
                 },
                 {
                     path: 'bymyprofile',
@@ -117,6 +120,7 @@ export var router = new VueRouter({
             name: 'admin',
             component: MainAdmin,
             meta: { auth: true, isAdmin: true },
+            props: { auth: auth },
             children: []
         },
         {

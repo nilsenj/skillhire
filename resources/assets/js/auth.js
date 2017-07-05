@@ -29,7 +29,6 @@ export default {
                         } else {
                             next()
                         }
-                        console.log(user);
                         if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
                             next()
                         } else {

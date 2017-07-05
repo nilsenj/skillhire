@@ -6,7 +6,7 @@
                 <ul class="nav nav-pills" style="margin: 1.5em 0 1em;">
                 </ul>
             </div>
-            <router-view></router-view>
+            <router-view :auth="auth"></router-view>
         </div>
     </div>
 </template>
@@ -17,7 +17,9 @@
     import auth from '../../auth.js';
     export default {
         data() {
-            return {}
+            return {
+                auth: auth
+            }
         },
         methods: {
         },

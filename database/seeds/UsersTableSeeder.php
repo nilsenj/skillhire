@@ -36,5 +36,14 @@ class UsersTableSeeder extends Seeder
         factory(\App\Models\User::class, 20)->create()->each(function ($u) {
             $u->attachRole(3);
         });
+        $user = \App\Models\User::UpdateOrCreate([
+            'name' => 'badCoder_employer',
+
+            'email' => 'nikoleivan@me.com',
+
+            'password' => 'nilsenj-dev-01',
+        ]);
+
+        $user->attachRole(3);
     }
 }

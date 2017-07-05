@@ -15,7 +15,7 @@
 
                 </ul>
             </div>
-            <router-view></router-view>
+            <router-view :auth="auth"></router-view>
         </div>
     </div>
 </template>
@@ -27,11 +27,13 @@
     export default {
         data() {
             return {
-                vacancies: {}
+                vacancies: {},
+                auth: auth
             }
         },
         methods: {
             all() {
+                console.log(this.auth);
                 this.$http.get('api/vacancy/byUser').then(response => {
 
                     // get body data

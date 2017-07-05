@@ -126,8 +126,10 @@
                 offset: 4,
             }
         },
+        props: ['auth'],
         methods: {
             all(page) {
+                console.log(this.auth);
                 var _this = this;
 //                $.ajax({
 //                    url: 'api/vacancy/all?page='+page,

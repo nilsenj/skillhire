@@ -1,7 +1,7 @@
 <template>
     <div>
         <navigation :auth="auth"></navigation>
-        <router-view></router-view>
+        <router-view :auth="auth"></router-view>
     </div>
 </template>
 

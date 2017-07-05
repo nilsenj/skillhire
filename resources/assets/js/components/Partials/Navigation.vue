@@ -23,7 +23,7 @@
                         <router-link :to="{ name: 'employees' }">Employees</router-link>
                     </li>
                     <li>
-                        <router-link v-if="!auth.user.roles.display_name !== 'employer'"  :to="{ name: 'employers' }">Employers</router-link>
+                        <router-link v-if="auth.user.roles.display_name == 'employer'"  :to="{ name: 'employers' }">Employers</router-link>
                     </li>
                     <li>
                         <router-link v-if="auth.user.roles.display_name == 'admin'"  :to="{ name: 'admin' }">Admin Page</router-link>
