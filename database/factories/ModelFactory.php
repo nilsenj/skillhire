@@ -43,10 +43,10 @@ $factory->define(App\Models\Vacancy::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Proposal::class, function (Faker\Generator $faker) {
+$factory->define(\App\Core\Messenger\Models\Proposal::class, function (Faker\Generator $faker) {
 //    $authors =
     return [
-        'author_id' => $faker->numberBetween(1,21),
-        'replier_id' => $faker->numberBetween(1,21)
+        'subject' => implode(' ',$faker->sentences(2)),
+        'author_id' => $faker->numberBetween(1,21)
     ];
 });

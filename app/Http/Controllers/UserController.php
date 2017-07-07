@@ -17,6 +17,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = [];
+        $data['id'] = $request->user()->id;
         $data['name'] = $request->user()->name;
         $data['email'] = $request->user()->email;
         $data['roles'] = $request->user()->roles;

@@ -17,6 +17,10 @@ import VacancyTrendFilter from './components/Vacancy/TrendFilter.vue';
 import Employers from './components/Employers/Employers.vue';
 import Employees from './components/Employees/Employees.vue';
 import MainAdmin from './components/Admin/Main.vue';
+import MainProposal from './components/Proposal/Main.vue';
+import Proposal from './components/Proposal/Proposal.vue';
+import AllProposals from './components/Proposal/All.vue';
+import PublicProfile from './components/User/PublicProfile.vue';
 import auth from './services/auth.service.js';
 
 export var router = new VueRouter({
@@ -49,6 +53,12 @@ export var router = new VueRouter({
                     meta: { auth: true }
                 },
                 {
+                    path: 'public-profile/:userId',
+                    name: 'public-profile',
+                    component: PublicProfile,
+                    meta: { auth: true }
+                },
+                {
                     path: 'skills',
                     name: 'skills',
                     component: Skills,
@@ -66,6 +76,30 @@ export var router = new VueRouter({
                     component: AdditionalSettings,
                     meta: { auth: true }
                 },
+            ]
+        },
+        {
+            path: '/proposals',
+            name: 'proposals',
+            component: MainProposal,
+            meta: { auth: true },
+            props: { default: true },
+            children: [
+                {
+                    path: 'all',
+                    name: 'all',
+                    default: true,
+                    component: AllProposals,
+                    meta: { auth: true },
+                },
+                {
+                    path: ':proposalId',
+                    name: 'proposal',
+                    default: true,
+                    component: Proposal,
+                    meta: { auth: true },
+                },
+                { path: '*', redirect: '/proposals/all' }
             ]
         },
         {

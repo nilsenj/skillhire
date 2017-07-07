@@ -1,5 +1,6 @@
 <?php namespace App\Core\Messenger\Models;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,11 +33,40 @@ class Proposal extends Eloquent
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
+     * @var array
+     */
+    protected $with= ['author'];
+
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'latest_message',
+        'inbox_date'
+    ];
+
+    /**
+     * @return mixed
+     */
+    public function getInboxDateAttribute()
+    {
+        return $this->latest_message->created_at->diffForHumans();
+    }
+
+    /**
      * "Users" table name to use for manual queries
      *
      * @var string|null
      */
     private $usersTable = null;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 
     /**
      * Messages relationship
@@ -46,16 +76,6 @@ class Proposal extends Eloquent
     public function messages()
     {
         return $this->hasMany('App\Core\Messenger\Models\Message');
-    }
-
-    /**
-     * Returns the latest message from a Proposal
-     *
-     * @return mixed
-     */
-    public function getLatestMessageAttribute()
-    {
-        return $this->messages()->latest()->first();
     }
 
     /**
@@ -96,7 +116,7 @@ class Proposal extends Eloquent
      */
     public function participantsUserIds($userId = null)
     {
-        $users = $this->participants()->withTrashed()->lists('user_id');
+        $users = $this->participants()->withTrashed()->pluck('user_id');
 
         if ($userId) {
             $users[] = $userId;
@@ -121,6 +141,14 @@ class Proposal extends Eloquent
     }
 
     /**
+     * @return mixed
+     */
+    public function getLatestMessageAttribute()
+    {
+        return $this->messages()->latest()->first();
+    }
+
+    /**
      * Returns Proposals with new messages that the user is associated with
      *
      * @param $query
@@ -133,7 +161,8 @@ class Proposal extends Eloquent
             ->where('participants.user_id', $userId)
             ->whereNull('participants.deleted_at')
             ->where(function ($query) {
-                $query->where('proposals.updated_at', '>', $this->getConnection()->raw($this->getConnection()->getTablePrefix() . 'participants.last_read'))
+                $query->where('proposals.updated_at', '>',
+                    $this->getConnection()->raw($this->getConnection()->getTablePrefix() . 'participants.last_read'))
                     ->orWhereNull('participants.last_read');
             })
             ->select('proposals.*');

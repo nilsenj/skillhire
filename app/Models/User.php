@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Messenger\Models\Proposal;
 use App\Core\Messenger\Traits\Messagable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,6 +48,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function authorProposal() {
+
+        return $this->hasMany(Proposal::class, 'author_id');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -15,6 +15,12 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('author_id')->unsigned();
+            $table->foreign('author_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('subject');
             $table->timestamps();
             $table->softDeletes();

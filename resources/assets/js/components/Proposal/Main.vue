@@ -1,12 +1,7 @@
-<template>`
+<template>
     <div>
         <div class="container">
-            <div class="page-header">
-                <h1><span id="proposal_title" class="text-capitalize">Proposals</span>
-                    <small class="text-muted">{{ proposals.count }}</small>
-                </h1>
-            </div>
-            <router-view></router-view>
+            <router-view :proposals="proposals" :auth="auth"></router-view>
         </div>
     </div>
 </template>
@@ -18,15 +13,15 @@
     export default {
         data() {
             return {
-                proposals: {}
+                proposals: {},
+                auth: auth
             }
         },
         methods: {
             all() {
-                this.$http.get('api/proposal/byUser').then(response => {
+                this.$http.get('api/proposals/all').then(response => {
                     // get body data
                     this.proposals = response.body;
-
                 }, response => {
                     // error callback
                 });

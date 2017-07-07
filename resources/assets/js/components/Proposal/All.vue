@@ -1,63 +1,63 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-4 col-sm-push-8">
-                <div class="jobs-filter">
-                    <div class="jobs-filter-wrapper js-jobs-filter-wrapper">
-                        <h2 class="jobs-filter__title">Filters</h2>
-                        <div class="jobs-filter__set-title">Trend</div>
-                        <div class="jobs-filter__set">
-                            <router-link v-for="trend in trends" :key="trend.id"
-                                         :to="'/proposals/trend/'+trend.name" class="jobs-filter__link">
-                                {{trend.name}}
-                            </router-link>
+        <div v-if="error" class="text-warning">
+            {{error}}
+        </div>
+        <h3>
+            Proposals
+        </h3>
+        <div class="row inbox-message candidate-inbox clearfix ">
+            <div v-for="item in proposals" class="clearfix">
+            <div class="media col-sm-4">
+                <div class="media-left">
+                    <img v-if="item.author.contacts.avatar" class="media-object userpic"
+                         :src="item.author.contacts.avatar">
+                    <img v-if="!item.author.contacts.avatar" class="media-object userpic"
+                         :src="item.author.contacts.default_image">
+                </div>
+                <div class="media-body">
+                    <p class="recruiter-name">
+                        <router-link :to="'account/public-profile/'+item.author.id">{{item.author.name}}</router-link>
+                    </p>
+                    <p class="headline">{{item.author.profile.position}}</p>
+                    <p class="inbox-date">
+                        {{item.inbox_date}}
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="message-text">
+                    <router-link  :to="{ name: 'proposal', params: { proposalId: item.id }}">
+                        <div v-if="item.latest_message.user_id == auth.user.profile.id">
+                            <span class="message-your-reply">You: </span> {{item.latest_message.body}}
                         </div>
-                        <div class="jobs-filter__set-title">Locations</div>
-                        <div class="jobs-filter__set">
-                            <router-link v-for="location in locations" :key="location.name"
-                                         :to="'/proposals/location/'+location.name" class="jobs-filter__link">
-                                {{location.name}}
-                            </router-link>
-                        </div>
+                    </router-link>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="message-btn-wrapper">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-click="dropdown">
+                            Ответить <b class="caret"></b>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/my/inbox/841141/#reply">Начать общение</a></li>
 
-                        <div class="jobs-filter__set-title">🚜&nbsp;&nbsp;Working variants</div>
-                        <div class="jobs-filter__set">
-                            <router-link v-for="variant in variants" :key="variant.id"
-                                         :to="'/proposals/variant/'+variant.name" class="jobs-filter__link">
-                                {{variant.name}}
-                            </router-link>
-                        </div>
+
+
+
+
+                            <li><a href="/my/inbox/841141/?archive_from_inbox=">Отправить в архив</a></li>
+
+                            <li class="divider"></li>
+                            <li><a href="/my/stop/">Я уже не ищу работу</a></li>
+
+                            <li><a href="/my/report_hire/?pk=25196&amp;from=inbox">Сообщить о найме</a></li>
+
+                        </ul>
                     </div>
                 </div>
-
             </div>
-            <div class="col-sm-8 col-sm-pull-4" style="padding-left: 0;">
-                <ul class="list-unstyled list-jobs">
-                    <li v-for="item in proposals" class="list-jobs__item">
-                        <div class="list-jobs__title">
-                            <router-link :to="{ name: 'proposal', params: { proposalId: item.id }}">{{ item.title }}
-                            </router-link>
-                        </div>
-                        <div class="list-jobs__description">
-                            <p>
-                                {{ item.body }}
-                            </p>
-                        </div>
-                        <div class="list-jobs__details">
-                            <a class="list-jobs__recruiter-details" href="#">
-                                <img v-if="item.author.contacts.avatar" class="list-jobs__userpic"
-                                     :src="item.author.contacts.avatar"
-                                     width="16" height="16" :alt="item.author.name">{{item.author.name}}</a>,
-                            {{item.author.profile.position}}
-                            ·
-                            {{item.location}}
-                        </div>
-                    </li>
-                </ul>
-                <vue-simple-pagination v-bind:pagination="pagination"
-                                       v-on:click.native="all(pagination.current_page)"
-                                       :offset="4">
-                </vue-simple-pagination>
             </div>
         </div>
     </div>
@@ -69,41 +69,46 @@
         line-height: 1.42857143;
     }
 
-    .list-jobs__title {
-        font-size: 18px;
-        margin-bottom: 3px;
-        text-transform: capitalize;
+    .inbox-message:hover {
+        background-color: #faf8f5;
     }
-
-    .list-jobs__details {
-        font-size: 12px;
+    .candidate-name, .recruiter-name {
+        font-weight: bold;
+        line-height: 1.3;
+        margin-bottom: 0.33em;
+    }
+    .headline, .recruiter-headline {
+        color: #7d8e8b;
+        font-size: 0.9em;
+        margin: 0 0 0.25em;
+        line-height: 1.3;
+        overflow: hidden;
+    }
+    .inbox-date {
+        line-height: 1.3;
         color: #999;
+        margin: 0;
+        font-size: 0.8em;
     }
-
-    .list-jobs__recruiter-details {
+    .message-text {
+        margin-bottom: 1em;
+        overflow: hidden;
+    }
+    .message-your-reply {
+        font-weight: bold;
         color: #888;
-        /* text-decoration: underline; */
-        font-weight: 500;
-    }
-
-    .list-jobs__userpic {
-        float: left;
-        width: 16px;
-        height: 16px;
-        margin: 1px 5px 0 0;
-        border-radius: 50%;
-    }
-
-    .list-jobs__item {
-        margin-bottom: 24px;
-    }
-
-    .jobs-filter__link {
+        padding-left: 12px;
         display: inline-block;
-        margin: 0 2px 5px 0;
-        padding: 4px 7px 3px;
-        background-color: white;
-        border-radius: 3px;
+        position: relative;
+    }
+    .message-btn-wrapper {
+        text-align: right;
+    }
+    .userpic {
+        border-radius: 2px;
+        width: 50px;
+        height: 50px;
+        max-width: none;
     }
 </style>
 <script>
@@ -111,82 +116,16 @@
     export default {
         data() {
             return {
-                proposals: {},
-                trends: {},
-                locations: {},
-                variants: {},
-                counter: 0,
-                pagination: {
-                    total: 0,
-                    per_page: 2,
-                    from: 1,
-                    to: 0,
-                    current_page: 1
-                },
-                offset: 4,
+                error: ""
             }
         },
+        props: ['proposals', 'auth'],
         methods: {
-            all(page) {
-                var _this = this;
-//                $.ajax({
-//                    url: 'api/proposal/all?page='+page,
-//                    success: (response) => {
-//                        _this.proposals = response.body;
-//                        _this.pagination = response;
-//                    }
-//                });
-
-                this.$http.get('api/proposal/all?page='+page).then(response => {
-
-                    // get body data
-                    _this.proposals = response.body.items.data;
-                    delete(response.body.items.data);
-                    _this.pagination = response.body.items;
-
-                }, response => {
-                    // error callback
-                });
-            },
-            allTrends() {
-                this.$http.get('api/trends').then(response => {
-
-                    // get body data
-                    this.trends = response.body;
-
-                }, response => {
-                    // error callback
-                });
-            },
-            getDistinctLocations() {
-                this.$http.get('api/proposal/getDistinctLocations').then(response => {
-
-                    // get body data
-                    this.locations = response.body;
-                    console.log(response.body);
-
-                }, response => {
-                    // error callback
-                });
-            },
-            getVariants() {
-                this.$http.get('api/working_variants').then(response => {
-
-                    // get body data
-                    this.variants = response.body;
-
-                }, response => {
-                    // error callback
-                });
+            all() {
             }
         },
         mounted: function () {
-            $("#proposal_title").html("proposals");
-            let page =  this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-            this.all(page);
-            this.allTrends();
-            this.getDistinctLocations();
-            this.getVariants();
+            $("#proposal_title").html("Proposals");
         }
     }
 </script>

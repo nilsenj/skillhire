@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Messenger\Models\Message;
 use App\Core\Messenger\Models\Participant;
 use App\Core\Messenger\Models\Proposal;
+use App\Core\Transformers\ProposalsTransformer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,14 +32,15 @@ class ProposalsController extends Controller
         $currentUserId = $request->user()->id;
 
         // All proposals, ignore deleted/archived participants
-        $proposals = Proposal::getAllLatest()->get();
+        //$proposals = Proposal::getAllLatest()->get();
 
         // All proposals that user is participating in
-        // $proposals = Proposal::forUser($currentUserId)->latest('updated_at')->get();
+        $proposals = Proposal::forUser($currentUserId)->latest('updated_at')->get();
 
         // All proposals that user is participating in, with new messages
-        // $proposals = Proposal::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
-        return response()->json(compact('proposals', 'currentUserId'));
+//      $proposals = Proposal::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
+
+        return response()->json($proposals);
     }
 
     /**
@@ -52,17 +54,17 @@ class ProposalsController extends Controller
         try {
             $proposal = Proposal::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            \Session::flash('error_message', 'The proposal with ID: ' . $id . ' was not found.');
 
-            return redirect('messages');
+            return response()->json(['error_message' => 'The proposal with ID: ' .
+                $id . ' was not found.'], 404);
         }
 
         // show current user in list if not a current participant
-        // $users = User::whereNotIn('id', $proposal->participantsUserIds())->get();
+         $users = User::whereIn('id', $proposal->participantsUserIds())->get();
 
         // don't show the current user in list
         $userId = $request->user()->id;
-        $users = User::whereNotIn('id', $proposal->participantsUserIds($userId))->get();
+//        $users = User::whereNotIn('id', $proposal->participantsUserIds($userId))->get();
 
         $proposal->markAsRead($userId);
 
@@ -88,15 +90,15 @@ class ProposalsController extends Controller
         $message = Message::create(
             [
                 'proposal_id' => $proposal->id,
-                'user_id'   => $request->user()->id,
-                'body'      => $input['message'],
+                'user_id' => $request->user()->id,
+                'body' => $input['message'],
             ]
         );
 
         $sender = Participant::create(
             [
                 'proposal_id' => $proposal->id,
-                'user_id'   => $request->user()->id,
+                'user_id' => $request->user()->id,
                 'last_read' => new Carbon()
             ]
         );
@@ -108,10 +110,7 @@ class ProposalsController extends Controller
         }
 
         return response()->json([
-            'proposal_id' => $proposal->id,
-            'participant_id' => $sender->id,
-            'participants' => $participants,
-            'message' => $message], 200);
+            'proposal_id' => $proposal->id], 200);
     }
 
     /**
@@ -136,8 +135,8 @@ class ProposalsController extends Controller
         Message::create(
             [
                 'proposal_id' => $proposal->id,
-                'user_id'   => $request->id(),
-                'body'      => Input::get('message'),
+                'user_id' => $request->id(),
+                'body' => Input::get('message'),
             ]
         );
 
@@ -145,7 +144,7 @@ class ProposalsController extends Controller
         $participant = Participant::firstOrCreate(
             [
                 'proposal_id' => $proposal->id,
-                'user_id'   => $request->user()->id
+                'user_id' => $request->user()->id
             ]
         );
         $participant->last_read = new Carbon;

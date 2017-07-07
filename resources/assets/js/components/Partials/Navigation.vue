@@ -17,6 +17,9 @@
                         <router-link :to="{ name: 'home' }">Home</router-link>
                     </li>
                     <li>
+                        <router-link :to="'/proposals/all'">Proposals</router-link>
+                    </li>
+                    <li>
                         <router-link :to="'/vacancies/all'">Vacancies</router-link>
                     </li>
                     <li>
