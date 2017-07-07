@@ -23,7 +23,7 @@ class Proposal extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['subject', 'banned'];
+    protected $fillable = ['subject', 'banned', 'author_id'];
 
     /**
      * The attributes that should be mutated to dates.

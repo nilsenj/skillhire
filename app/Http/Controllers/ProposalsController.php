@@ -83,6 +83,7 @@ class ProposalsController extends Controller
         $proposal = Proposal::create(
             [
                 'subject' => $input['subject'],
+                'author_id' => !empty($input['recipients']) ? $input['recipients'][0] : 0
             ]
         );
 
