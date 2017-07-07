@@ -6,8 +6,7 @@
         <h3>
             Proposals
         </h3>
-        <div class="row inbox-message candidate-inbox clearfix ">
-            <div v-for="item in proposals" class="clearfix">
+        <div v-for="item in proposals" class="row inbox-message candidate-inbox clearfix ">
             <div class="media col-sm-4">
                 <div class="media-left">
                     <img v-if="item.author.contacts.avatar" class="media-object userpic"
@@ -58,9 +57,7 @@
                     </div>
                 </div>
             </div>
-            </div>
-        </div>
-    </div>
+            </div></div>
 </template>
 <style>
     body {
@@ -109,6 +106,12 @@
         width: 50px;
         height: 50px;
         max-width: none;
+    }
+    .inbox-message, .recruiter-row {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 15px 0;
+        margin-top: 0;
+        position: relative;
     }
 </style>
 <script>

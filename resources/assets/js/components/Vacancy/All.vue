@@ -102,8 +102,12 @@
         display: inline-block;
         margin: 0 2px 5px 0;
         padding: 4px 7px 3px;
-        background-color: white;
+        background-color: #f5f8fb;
         border-radius: 3px;
+    }
+    .jobs-filter__link:hover, .jobs-filter__link:focus {
+        background-color: #eaf1f7;
+        text-decoration: none;
     }
 </style>
 <script>

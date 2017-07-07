@@ -111,7 +111,7 @@ export var router = new VueRouter({
             children: [
                 {
                     path: 'all',
-                    name: 'all',
+                    name: 'vacancy-all',
                     default: true,
                     component: AllVacancies,
                     meta: { auth: true },

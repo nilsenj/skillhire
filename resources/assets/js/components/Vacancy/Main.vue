@@ -7,7 +7,7 @@
                 </h1>
                 <ul class="nav nav-pills" style="margin: 1.5em 0 1em;">
                     <router-link tag="li" exact-active-class="active" to="/vacancies/all">
-                        <router-link :to="{ name: 'all' }">All</router-link>
+                        <router-link :to="{ name: 'vacancy-all' }">All</router-link>
                     </router-link>
                     <router-link tag="li" exact-active-class="active" to="/vacancies/bymyprofile">
                         <router-link :to="{ name: 'bymyprofile' }">By My Profile</router-link>

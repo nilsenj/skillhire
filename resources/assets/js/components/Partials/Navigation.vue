@@ -59,6 +59,8 @@
                     <li class="pull-right" v-if="auth.user.authenticated">
                         <router-link :to="{ name: 'profile' }">
                             Hi, {{ auth.user.profile.name }}
+                            <span v-if="auth.user.profile.visible" class="label label-success">online</span>
+                            <span v-if="!auth.user.profile.visible" class="label label-danger">not visible</span>
                         </router-link>
                     </li>
                 </ul>
