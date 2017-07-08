@@ -12,6 +12,9 @@
         color: #333;
         background-color: #fff;
     }
+    .container {
+        max-width: 960px;
+    }
     .navbar-default {
         background-color: #f8f8f8;
         border-color: #e7e7e7;

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <div v-if="error" class="text-warning">
             {{error}}
         </div>
@@ -57,7 +57,10 @@
                     </div>
                 </div>
             </div>
-            </div></div>
+            </div>
+
+
+    </div>
 </template>
 <style>
     body {
