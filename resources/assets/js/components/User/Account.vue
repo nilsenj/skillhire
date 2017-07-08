@@ -4,7 +4,7 @@
             <h1>My Account</h1>
             <p v-if="visible == 'visible'" style="font-size: 13px;">
                     <b class="text-success">Profile {{visible}}</b>
-                    <a   v-on:click="toggleVisibility($event)">(turn off)</a>
+                    <a v-on:click="toggleVisibility($event)">(turn off)</a>
                     <a v-if="visible != 'visible'"  v-on:click="toggleVisibility($event)">(turn on)</a>
                     &nbsp;•&nbsp;&nbsp;<a href="/q/67680705/" target="_blank"><i class="icon-hand-right"></i>Watch public profile</a>
             </p>
@@ -63,19 +63,6 @@
                 }, response => {
                     this.error = true;
                     this.errorMsg = response.error;
-                })
-            },
-            toggleVisibility(event) {
-                event.preventDefault();
-                Vue.http.post(
-                    'api/profile/toggleVisibility',
-                    {}
-                ).then(response => {
-                    this.error = false;
-                    this.visible = response.body.visible;
-                }, response => {
-                    this.error = true
-                    this.errorMsg = response.error
                 })
             }
         },

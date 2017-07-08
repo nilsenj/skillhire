@@ -67,6 +67,7 @@ class ProposalsController extends Controller
 //        $users = User::whereNotIn('id', $proposal->participantsUserIds($userId))->get();
 
         $proposal->markAsRead($userId);
+        $proposal->load('messages');
 
         return response()->json(compact('proposal', 'users'));
     }
@@ -158,4 +159,49 @@ class ProposalsController extends Controller
 
         return redirect('messages/' . $id);
     }
+
+    /**
+     * Adds a new message to a current proposal
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function openProposal(Request $request, $id)
+    {
+        try {
+            $proposal = Proposal::findOrFail($id);
+            $status = $request->get('status');
+        } catch (ModelNotFoundException $e) {
+            \Log::error( 'The proposal with ID: ' .
+                $id . ' was not found. Code: ' . 404);
+            return response()->json(['error_message', 'The proposal with ID: ' .
+                $id . ' was not found.'], 404);
+        }
+
+        $message = "";
+        if($status == 'opened') {
+            $author = ($proposal->author_id == $request->user()->id) ? 'You' : 'Employee';
+            $message = $author . "opened contacts.";
+        }
+        if($status == 'closed') {
+            $author = ($proposal->author_id == $request->user()->id) ? 'You' : 'Employee';
+            $message = $author . "closed proposal." . Input::has('message') ? $request->get('message') : '';
+        }
+
+        if(!$status) {
+           return response()->json(['error_message' => 'Please provide status'], 422);
+        }
+
+        // Message
+        Message::create(
+            [
+                'proposal_id' => $proposal->id,
+                'user_id' => $request->user()->id,
+                'body' => $message
+            ]
+        );
+
+        return response()->json(['message', 'The proposal opened'], 200);
+    }
+
 }

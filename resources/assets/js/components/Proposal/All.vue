@@ -116,6 +116,10 @@
         margin-top: 0;
         position: relative;
     }
+    .message-text a {
+        color: #777;
+        font-size: 13px;
+    }
 </style>
 <script>
     import auth from '../../services/auth.service.js';

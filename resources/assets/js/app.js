@@ -15,25 +15,49 @@ window.Vue = require('vue');
  */
 
 
+/**
+ * system imports
+ */
 import VueRouter from 'vue-router';
 import App from './components/App.vue';
 import VueResource from 'vue-resource';
 import {router} from './routes.js';
 import VeeValidate from 'vee-validate';
+import auth from './services/auth.service';
 
+/**
+ * mixins imports
+ */
+import {toggleVisibility} from './mixins/toggleVisibility';
+
+//components uses
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(VeeValidate);
 Vue.component('vue-pagination', require('./components/System/pagination.vue'));
 Vue.component('vue-simple-pagination', require('./components/System/simple-pagination.vue'));
+Vue.component('navigation', require('./components/Partials/Navigation.vue'));
 
+//global headers set up
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content');
 Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
 Vue.http.options.root = window.BASE_URL ? window.BASE_URL : 'http://skillhire.dev';
-Vue.component('navigation', require('./components/Partials/Navigation.vue'));
-import auth from './services/auth.service';
 auth.authBefore();
 
+const eventHub = new Vue(); // Single event hub
+
+Vue.mixin({
+    data: function () {
+        return {
+            eventHub: eventHub
+        }
+    },
+    methods: {
+        toggleVisibility: toggleVisibility
+    }
+});
+
+// Exports
 export default Vue;
 
 

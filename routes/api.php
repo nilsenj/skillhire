@@ -82,6 +82,9 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
             Route::get('/{id}', [
                 'uses' => 'ProposalsController@show',
             ]);
+            Route::post('/openProposal/{id}', [
+                'uses' => 'ProposalsController@openProposal',
+            ]);
         });
 
         Route::group(['prefix' => 'working_variants'], function () {

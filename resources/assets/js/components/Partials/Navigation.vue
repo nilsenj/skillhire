@@ -31,19 +31,6 @@
                     <li>
                         <router-link v-if="auth.user.roles.display_name == 'admin'"  :to="{ name: 'admin' }">Admin Page</router-link>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
@@ -59,8 +46,10 @@
                     <li class="pull-right" v-if="auth.user.authenticated">
                         <router-link :to="{ name: 'profile' }">
                             Hi, {{ auth.user.profile.name }}
-                            <span v-if="auth.user.profile.visible" class="label label-success">online</span>
                             <span v-if="!auth.user.profile.visible" class="label label-danger">not visible</span>
+                            <span v-if="(auth.user.profile.visible) && (auth.user.profile.visible !='visible') && (auth.user.profile.visible !='not visible')" class="label label-success">online</span>
+                            <span v-if="auth.user.profile.visible == 'visible'" class="label label-success">online</span>
+                            <span v-if="auth.user.profile.visible == 'not visible'" class="label label-danger">not visible</span>
                         </router-link>
                     </li>
                 </ul>
@@ -77,9 +66,21 @@
                roles: []
            }
         },
+        created() {
+            let _this = this;
+            this.eventHub.$on('user:visibility', function(status) {
+                _this.auth.user.profile.visible = status.visible;
+            });
+        },
         methods: {
             signout() {
                 this.auth.signout()
+            }
+        },
+        events: {
+            'user:visibility': function(data) {
+                // do your stuff here
+                console.log(data);
             }
         },
         mounted() {
