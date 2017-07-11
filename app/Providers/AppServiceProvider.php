@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
 
         User::created(function(User $user) {
             $user->profile()->create([]);
-            $user->contacts()->create([]);
+            $user->contacts()->create(['skype' => $user->name.'-'.$user->id]);
             $user->additionalSettings()->create([]);
         });
 

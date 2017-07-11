@@ -26,10 +26,13 @@
                         <router-link :to="{ name: 'employees' }">Employees</router-link>
                     </li>
                     <li>
-                        <router-link v-if="auth.user.roles.display_name == 'employer'"  :to="{ name: 'employers' }">Employers</router-link>
+                        <router-link v-if="auth.user.roles.display_name == 'employer'" :to="{ name: 'employers' }">
+                            Employers
+                        </router-link>
                     </li>
                     <li>
-                        <router-link v-if="auth.user.roles.display_name == 'admin'"  :to="{ name: 'admin' }">Admin Page</router-link>
+                        <router-link v-if="auth.user.roles.display_name == 'admin'" :to="{ name: 'admin' }">Admin Page
+                        </router-link>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -47,8 +50,10 @@
                         <router-link :to="{ name: 'profile' }">
                             Hi, {{ auth.user.profile.name }}
                             <span v-if="!auth.user.profile.visible" class="label label-danger">not visible</span>
-                            <span v-if="(auth.user.profile.visible) && (auth.user.profile.visible !='visible') && (auth.user.profile.visible !='not visible')" class="label label-success">online</span>
-                            <span v-if="auth.user.profile.visible == 'visible'" class="label label-success">online</span>
+                            <span v-if="(auth.user.profile.visible) && (auth.user.profile.visible !='visible') && (auth.user.profile.visible !='not visible')"
+                                  class="label label-success">online</span>
+                            <span v-if="auth.user.profile.visible == 'visible'"
+                                  class="label label-success">online</span>
                             <span v-if="auth.user.profile.visible == 'not visible'" class="label label-danger">not visible</span>
                         </router-link>
                     </li>
@@ -62,13 +67,13 @@
     export default {
         props: ['auth'],
         data() {
-           return {
-               roles: []
-           }
+            return {
+                roles: []
+            }
         },
         created() {
             let _this = this;
-            this.eventHub.$on('user:visibility', function(status) {
+            this.eventHub.$on('user:visibility', function (status) {
                 _this.auth.user.profile.visible = status.visible;
             });
         },
@@ -78,7 +83,7 @@
             }
         },
         events: {
-            'user:visibility': function(data) {
+            'user:visibility': function (data) {
                 // do your stuff here
                 console.log(data);
             }

@@ -53,7 +53,7 @@ export var router = new VueRouter({
                     meta: { auth: true }
                 },
                 {
-                    path: 'public-profile/:userId',
+                    path: 'public-profile:userId',
                     name: 'public-profile',
                     component: PublicProfile,
                     meta: { auth: true }

@@ -26,6 +26,11 @@ class Message extends Eloquent
      */
     protected $fillable = ['proposal_id', 'user_id', 'body', 'banned'];
 
+
+    /**
+     * @var array
+     */
+    protected $with = [];
     /**
      * Validation rules.
      *

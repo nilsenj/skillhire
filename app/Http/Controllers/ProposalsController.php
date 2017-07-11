@@ -6,6 +6,8 @@ use App\Core\Messenger\Models\Message;
 use App\Core\Messenger\Models\Participant;
 use App\Core\Messenger\Models\Proposal;
 use App\Core\Transformers\ProposalsTransformer;
+use App\Models\AuthorRating;
+use App\Models\ProposalStatuses;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -36,7 +38,6 @@ class ProposalsController extends Controller
 
         // All proposals that user is participating in
         $proposals = Proposal::forUser($currentUserId)->latest('updated_at')->get();
-
         // All proposals that user is participating in, with new messages
 //      $proposals = Proposal::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
 
@@ -179,13 +180,18 @@ class ProposalsController extends Controller
         }
 
         $message = "";
+        $proposalStatus = ProposalStatuses::where('proposal_id', $proposal->id);
         if($status == 'opened') {
-            $author = ($proposal->author_id == $request->user()->id) ? 'You' : 'Employee';
-            $message = $author . "opened contacts.";
+            $author = ($proposal->author_id == $request->user()->id) ? 'You' :
+                User::find($proposal->author_id)->roles->first()->name;
+            $message = $author . " opened contacts. ". $request->get('message');
+            $proposalStatus->update(['status' => $status]);
         }
         if($status == 'closed') {
-            $author = ($proposal->author_id == $request->user()->id) ? 'You' : 'Employee';
-            $message = $author . "closed proposal." . Input::has('message') ? $request->get('message') : '';
+            $author = ($proposal->author_id == $request->user()->id) ? 'You' :
+                User::find($proposal->author_id)->roles->first()->name;
+            $message = $author . " closed proposal." . Input::has('message') ? $request->get('message') : '';
+            $proposalStatus->update([ 'status' => $status]);
         }
 
         if(!$status) {
@@ -202,6 +208,21 @@ class ProposalsController extends Controller
         );
 
         return response()->json(['message', 'The proposal opened'], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateRating(Request $request, $id) {
+        $user = $request->user();
+        $counter = $request->all();
+
+        $ratingCounter = new AuthorRating();
+        $newCounter = $ratingCounter->find($id)->update(['rating' => $counter['rating']]);
+
+        return response()->json(['message' => 'ok', 'data' => $newCounter], 200);
     }
 
 }

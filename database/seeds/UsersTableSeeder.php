@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
 
         $user->attachRole(2);
 
-        factory(\App\Models\User::class, 20)->create()->each(function ($u) {
+        factory(\App\Models\User::class, 20)->create()->each(function (\App\Models\User $u) {
             $u->attachRole(3);
         });
         $user = \App\Models\User::UpdateOrCreate([

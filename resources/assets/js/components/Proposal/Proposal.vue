@@ -5,31 +5,63 @@
         </strong>
         <div class="row">
             <div class="col-sm-7 col-sm-offset-1 col-xs-12 col-sm-push-4">
-                <div class="thread-message">
-                    <div class="clearfix" style="margin-bottom: 0.75em;">
-                        <div class="alert alert-info" v-if="proposal.proposal_statuses.status == 'opened'"></div>
-                        <small class="text-muted">{{proposal.proposal_statuses.created_at}}</small>
-                    </div>
+                <div class="alert alert-danger" v-if="proposal_statuses.status == 'closed'">
                     <p>
-                        {{__first(proposal.messages).body}}
+                        Proposal closed or not yet accepted
                     </p>
                 </div>
+                <div class="alert alert-info" v-if="proposal_statuses.status == 'opened'">
+                    <p>
+                        Proposal opened from both sides
+                    </p>
+                </div>
+                <div v-for="message in proposal.messages" class="thread-message">
+                    <div class="clearfix" style="margin-bottom: 0.75em;">
+                        <div class="clearfix" style="margin-bottom: 0.75em;">
+                            <router-link :to="'account/public-profile/'+message.user.id">
+                                <img v-if="message.user.contacts.avatar"
+                                     style="float: left; margin-right: 10px; width: 40px; height: 40px;"
+                                     class="userpic" :src="message.user.contacts.avatar">
+                                <img v-if="!message.user.contacts.avatar"
+                                     style="float: left; margin-right: 10px; width: 40px; height: 40px;"
+                                     class="userpic" :src="message.user.contacts.default_image">
+                            </router-link>
+                            <strong>
+                                <router-link :to="'account/public-profile/'+message.user.id">
+                                    {{ message.user.name }}
+                                </router-link>
+                            </strong>
+                            <br>
+                            <small class="text-muted">{{ proposal_statuses.created_at }}</small>
+                        </div>
+                        <p>
+                            {{message.body}}
+                        </p>
+                    </div>
+                </div>
                 <br>
+                <form v-if="preOpened" method="post"
+                      class="form-horizontal form-horizontal-text-left js-inbox-reply-form">
+                    <div class="form-group" style="margin-right: 0; margin-left: 0;">
+                        <h4 style="margin-top: 0;">Write greetings message</h4>
+                        <textarea rows="5" v-model="message" placeholder="optional" name="message"
+                                  class="form-control keysubmit js-inbox-reply-message"></textarea>
+                    </div>
+                </form>
                 <a name="reply"></a>
-                <form v-if="proposal.proposal_statuses.status == 'opened'" method="post"
+                <form v-if="proposal_statuses.status == 'opened'" method="post"
                       class="form-horizontal form-horizontal-text-left js-inbox-reply-form">
                     <div class="form-group" style="margin-right: 0; margin-left: 0;">
                         <h4 style="margin-top: 0;">Reply</h4>
-                        <textarea rows="5" name="message"
+                        <textarea v-model="newMessage" rows="5" name="message"
                                   class="form-control keysubmit js-inbox-reply-message "></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary js-inbox-send-btn" data-loading-text="Отправляется...">
-                        Отправить
+                        Send
                     </button>
-                    <input type="hidden" name="csrfmiddlewaretoken" value="DriTYJaDUpffWaOjAsItJopwQL4E1oFz">
                 </form>
 
-                <div v-if="proposal.proposal_statuses.status == 'closed'" class="js-inbox-action-btns">
+                <div v-if="proposal_statuses.status == 'closed'" class="js-inbox-action-btns">
                     <button class="btn btn-primary js-inbox-toggle-reply-form" v-on:click="openProposal">
                         Start Conversation
                     </button>
@@ -51,113 +83,53 @@
             </div>
             <div class="col-sm-4 col-xs-12 col-sm-pull-8">
                 <div class="clearfix">
-                    <a href="/r/25196-product-owner-at-technologyideas-com/"><img class="userpic"
-                                                                                  style="float:left; margin-right: 10px;"
-                                                                                  src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/2/000/04e/1fc/08759bc.jpg"></a>
-                    <p class="recruiter-name"><a
-                            href="/r/25196-product-owner-at-technologyideas-com/">Bogdan Yatsina</a>
+                    <router-link :to="'account/public-profile/'+proposal.author_id">
+                        <img v-if="proposal.author.contacts.avatar"
+                             style="float:left; margin-right: 10px;"
+                             class="userpic" :src="proposal.author.contacts.avatar">
+                        <img v-if="!proposal.author.contacts.avatar"
+                             style="float:left; margin-right: 10px;"
+                             class="userpic" :src="proposal.author.contacts.default_image">
+                    </router-link>
+                    <p class="recruiter-name">
+                        <router-link :to="'account/public-profile/'+proposal.author_id">{{proposal.author.name}}</router-link>
 
                     </p>
-                    <p class="recruiter-headline">Product Owner at technologyideas.com</p>
+                    <p class="recruiter-headline">{{proposal.author.profile.position}}</p>
 
-                    <p><a href="https://www.linkedin.com/in/bogdanyatsyna/">LinkedIn</a></p>
-
-
-                    Skype: yatsinaba<br>
-                    <a href="mailto:leritomi@gmail.com">leritomi@gmail.com</a><br>
-
-                    <p></p>
+                    <p><a v-if="proposal.author.contacts.skype"
+                          :href="'skype:'+proposal.author.contacts.skype">{{proposal.author.contacts.skype}}</a></p>
+                    <p><a v-if="proposal.author.contacts.linkedin"
+                          :href="proposal.author.contacts.linkedin">LinkedIn</a></p>
+                    <p><a v-if="proposal.author.contacts.github"
+                          :href="proposal.author.contacts.github">Github</a></p>
+                    <p><a v-if="proposal.author.contacts.telegram"
+                          :href="'telegram.me/@'+proposal.author.contacts.telegram">Telegram</a></p>
+                    <a :href="'mailto:'+proposal.author.contacts.email">{{proposal.author.contacts.email}}</a><br>
                 </div>
 
                 <p class="text-muted">
-                    Рейтинг:
+                    Rating:
 
-                    н/д
+                    not defined
 
-                    <br>На Джинне с июля 2017
+                    <br>Here since {{proposal.author.created_at}}
                 </p>
-
-
-                <p class="text-muted">
-                    <small>Последний поиск:
-                        PHP программисты
-                        <nobr>
-                            Июль 4, 2017
-                        </nobr>
-                        .
-                    </small>
-                </p>
-
-
-                <p><a href="/my/report_hire/?pk=25196&amp;from=inbox_thread">Сообщить о найме</a></p>
-
-
-                <small>
-                    <a href="#spam" role="button" data-toggle="modal" style="color: #b7b7b7"><i
-                            class="glyphicon glyphicon-exclamation-sign"></i> Пожаловаться на
-                        работодателя</a></small>
-
-
-                <div id="spam" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true" data-swiftype-index="false">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form method="post">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">Пожаловаться на Bogdan Yatsina</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="text-warning">Три таких жалобы и рекрутер исчезает с Джинна.</p>
-                                    <label class="control-label" for="decline_message"><strong>Напишите почему, чтобы у рекрутера
-                                        был шанс исправиться:</strong></label>
-                                    <textarea id="decline_message" name="comment" rows="3"
-                                              class="input form-control keysubmit" required=""></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
-                                        Не жаловаться
-                                    </button>
-                                    <input type="submit" class="btn btn-danger" name="flagged" value="Пожаловаться">
-                                </div>
-                                <input type="hidden" name="csrfmiddlewaretoken"
-                                       value="DriTYJaDUpffWaOjAsItJopwQL4E1oFz">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
                 <br><br>
-                <h5>Оцените Bogdan Yatsina</h5>
+                <h5>Rate {{proposal.author.name}}</h5>
                 <form method="post" id="rate_recruiter">
-                    <input type="range" min="0" max="5" step="1" value="0" name="rate25196" id="rate25196"
-                           style="display: none;">
-                    <div class="rateit bigstars" id="rateit" data-rateit-min="0" data-rateit-max="5"
-                         data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-resetable="false"
-                         data-rateit-backingfld="#rate25196">
-                        <button id="rateit-reset-2" class="rateit-reset" aria-label="reset rating"
-                                aria-controls="rateit-range-2" style="display: none;"></button>
-                        <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                             aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"
-                             aria-readonly="false" style="width: 160px; height: 32px;">
-                            <div class="rateit-selected" style="height: 32px; width: 0px; display: block;"></div>
-                            <div class="rateit-hover" style="height: 32px; width: 0px; display: none;"></div>
-                        </div>
-                    </div>
-
+                    <star-rating :max-rating="5"
+                                 :step="2"
+                                 @rating-selected="updateRating($event)"
+                                 :increment="1"
+                                 :rating="proposal.author_rating.rating" :showRating="false"
+                                 :star-size="28"></star-rating>
                     <p>
                         <small>Оценка анонимная.
                             По этим оценкам строится рейтинг работодателя на Джинне.
                         </small>
                     </p>
-
-                    <input type="hidden" name="rateit">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="DriTYJaDUpffWaOjAsItJopwQL4E1oFz">
                 </form>
-
-
             </div>
         </div>
     </div>
@@ -167,11 +139,16 @@
 </style>
 <script>
     import auth from '../../services/auth.service.js';
+    import StarRating from 'vue-star-rating'
     export default {
         data() {
             return {
                 proposal: {},
+                proposal_statuses: {},
+                preOpened: false,
                 users: {},
+                message: "",
+                newMessage: "",
                 visible: 'visible',
                 error: false,
                 errorMsg: ''
@@ -180,34 +157,75 @@
         props: ['proposals', 'auth'],
         methods: {
             show() {
+                let _this = this;
                 this.$http.get('api/proposals/' + this.$route.params.proposalId).then(response => {
                     // get body data
-                    this.proposal = response.body.proposal;
-                    this.users = response.body.users;
+                    _this.proposal = response.body.proposal;
+                    _this.proposal_statuses = response.body.proposal.proposal_statuses;
+                    _this.first_message = response.body.proposal.messages.length > 0 ? response.body.proposal.messages[0] : '';
+                    _this.users = response.body.users;
+                    let messages = _this.proposal.messages;
+                    let messagesArr = [];
+                    messages.forEach(function (message, index, arr) {
+                        var user = $.grep(_this.users, function (e) {
+                            return e.id == message.user_id;
+                        });
+                        message.user = user.length ? user[0] : {};
+                        messagesArr.push(message);
+                    });
+                    this.proposal.messages = messagesArr;
+
+                    this.preOpened = false;
                 }, response => {
                     // error callback
                 });
             },
             openProposal(e) {
-                let data = {
-                    status: 'opened'
-                };
+                e.preventDefault();
+                if (this.preOpened) {
+                    let data = {
+                        status: 'opened',
+                        message: this.message
+                    };
+                    this.$http.post('api/proposals/openProposal/' + this.$route.params.proposalId, data).then(response => {
+                        // get body data
+                        console.log(response.message);
+                        this.show();
+                        this.preOpened = false;
+                    }, response => {
+                        // error callback
+                    })
+                } else {
+                    this.preOpened = true;
+                }
 
-                this.$http.post('api/proposals/' + this.$route.params.proposalId, data).then(response => {
-                    // get body data
-                    console.log(response.message);
-                    this.show();
-                }, response => {
-                    // error callback
-                })
             },
-            __first(messages) {
-                return messages.length > 0 ? messages[0] : ''
+            updateRating(event) {
+                let counterOld = this.proposal.author_rating.rating;
+                if(counterOld != event) {
+                    let counter = {};
+                    counter.rating = event;
+                    this.$http.put('api/proposals/updateRating/'+this.proposal.author_rating.id, counter).then(response => {
+                        this.show();
+                    }, response => {
+                        // error callback
+                        this.error = response.data;
+                    });
+                } else {
+                    alert('Nothing changed!');
+                }
+            },
+            __bindUserToMessage(messages, users) {
+                console.log(messages, users);
             }
         },
         mounted: function () {
             this.show();
+            this.preOpened = false;
             $("#proposal_title").html();
+        },
+        components: {
+            StarRating
         }
     }
 </script>

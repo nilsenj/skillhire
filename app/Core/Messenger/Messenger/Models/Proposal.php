@@ -1,5 +1,6 @@
 <?php namespace App\Core\Messenger\Models;
 
+use App\Models\AuthorRating;
 use App\Models\ProposalStatuses;
 use App\Models\User;
 use Carbon\Carbon;
@@ -36,7 +37,7 @@ class Proposal extends Eloquent
     /**
      * @var array
      */
-    protected $with= ['author', 'proposalStatuses'];
+    protected $with= ['author', 'proposalStatuses', 'authorRating'];
 
     /**
      * @var array
@@ -54,7 +55,20 @@ class Proposal extends Eloquent
             $status->status = ProposalStatuses::STATUSES[1];
             $status->proposal_id = $proposal->id;
             $status->save();
+
+            AuthorRating::create([
+                'proposal_id' => $proposal->id,
+                'author_id' => $proposal->author_id,
+            ]);
         });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function authorRating()
+    {
+        return $this->hasOne(AuthorRating::class, 'proposal_id');
     }
 
     /**
